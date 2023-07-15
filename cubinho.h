@@ -46,6 +46,22 @@ public:
 
     void displayCubinhoPolar();
     void displayCubinho();
+    friend class Cubo;
+
+    friend void giraVerdeHorario(int id);
+    friend void giraAzulHorario(int id);
+    friend void giraVermelhoHorario(int id);
+    friend void giraLaranjaHorario(int id);
+    friend void giraAmareloHorario(int id);
+    friend void giraBrancoHorario(int id);
+
+    friend void giraVerdeAntiHorario(int id);
+    friend void giraAzulAntiHorario(int id);
+    friend void giraVermelhoAntiHorario(int id);
+    friend void giraLaranjaAntiHorario(int id);
+    friend void giraAmareloAntiHorario(int id);
+    friend void giraBrancoAntiHorario(int id);
+
 
 };
 

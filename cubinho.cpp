@@ -181,8 +181,11 @@ void Cubinho::displayCubinhoPolar(){
     dx = d;
 
     glPushMatrix();
+    // cout << "aqui\n";
 
     glRotatef(rotX,1,0,0);
+    glRotatef(rotY,0,1,0);
+    glRotatef(rotZ,0,0,1);
 
     pts[0][0] = cx + dx;
     pts[0][1] = cy + dy;
