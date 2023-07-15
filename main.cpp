@@ -1,22 +1,25 @@
 #include <iostream>
 #include <GL/glut.h>
-#include "cubo.h"
+#include <cmath>
+#include "cubinho.h"
 
 
 
-Cubo cubo1;
+Cubinho cubo1;
 
-Cubo *cubos;
+Cubinho *cubos;
 
 float dOrtho = 5;
 
 float theta = 135;
 float phi = 45;
-float gamma = 90;
+float gamma1 = 90;
 float s = 1;
 
 bool mov = false;
 int xb, yb;
+
+using namespace std;
 
 void config(){
 	glEnable(GL_DEPTH_TEST);
@@ -26,7 +29,7 @@ void config(){
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glRotatef(gamma, 0, 0, 1);
+	glRotatef(gamma1, 0, 0, 1);
 	glRotatef(phi, 0, 1, 0);
 	glRotatef(theta, 0, 0, 1);
 	glScalef(s, s, s);
@@ -37,9 +40,12 @@ void display(){
 	glClearColor(0,0,0,0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	cubo1.displayCubo();
-	for(int i = 0; i < 27; i++)
-		cubos[i].displayCubo();
+	// cubo1.displayCubinho();
+	// for(int i = 0; i < 27; i++)
+	// 	cubos[i].displayCubinho();
+
+	cubos[13].displayCubinho();
+	cubos[26].displayCubinhoPolar();
 
 	glutSwapBuffers();
 
@@ -80,17 +86,30 @@ void botao_mov(int x, int y) {
 }
 
 
+void teclado(unsigned char key, int x, int y) {
+  cout << key << endl;
+  switch (key)
+  {
+  case '1':
+	// cout << "1\n";
+	break;
+  default:
+	break;
+  }
+}
+
+
 int main(int argc, char **argv){
 	int i;
-	cubos = new Cubo[27];
+	cubos = new Cubinho[27];
 	
 	for(i = 0; i < 27; i++){
 		cubos[i].setCZ(-1+i/9%3);
 		cubos[i].setCY(-1+i%3);
 		cubos[i].setCX(-1+i/3%3);
-
-		
 	}
+
+
 	// cubos[0].setCentro(1,1,1);
 
 
@@ -103,6 +122,7 @@ int main(int argc, char **argv){
 	config();
 	glutDisplayFunc(display);
 	// glutKeyboardFunc(teclado);
+	glutKeyboardFunc(teclado);
 	//	glutIdleFunc(executa);
 
 	glutMouseFunc(botao);

@@ -1,6 +1,9 @@
-#include "cubo.h"
+#include "cubinho.h"
 #include <iostream>
 #include <GL/glut.h>
+#include <cmath>
+
+using namespace std;
 
 namespace cor{
     float RED[3] = {1,0,0};
@@ -12,7 +15,7 @@ namespace cor{
 }
 
 
-void displayContornoCubo(float pts[8][3]){
+void displayContornoCubinho(float pts[8][3]){
     // glColor3f(1,1,1);
     glColor3f(0,0,0);
 
@@ -66,7 +69,7 @@ void displayContornoCubo(float pts[8][3]){
 }
 
 
-void Cubo::displayCubo(){
+void Cubinho::displayCubinho(){
     float pts[8][3];
     float d = largAresta / 2.f;
     int i;
@@ -91,7 +94,7 @@ void Cubo::displayCubo(){
         }
     }
 
-    displayContornoCubo(pts);
+    displayContornoCubinho(pts);
 
     glColor3fv(cor::GREEN);
     glBegin(GL_QUADS);
@@ -146,5 +149,140 @@ void Cubo::displayCubo(){
     glVertex3fv(pts[3+4]);
     glVertex3fv(pts[2+4]);
     glEnd();
+
+}
+
+
+
+
+void Cubinho::displayCubinhoPolar(){
+    int i;
+    float pts[8][3];
+    float d = largAresta / 2.f;
+    float raioc = cbrt(cx*cy*cz);
+    float dr = d*sqrt(2);
+    float dx, dy, dz;
+    dx = dr * cos(rotX);
+    dy = d;
+    // dz = - dr * cos(rotX);
+    dz = d;
+
+
+    // cout << "Raio: "<< raioc << endl;
+
+    // rotX += 1;
+
+    // pts[0]
+
+    // dx = dr*cos(rotX);
+
+    // dx = dr*cos
+
+    dx = d;
+
+    glPushMatrix();
+
+    glRotatef(rotX,1,0,0);
+
+    pts[0][0] = cx + dx;
+    pts[0][1] = cy + dy;
+    pts[1][0] = cx + dx;
+    pts[1][1] = cy + dy;
+    pts[2][0] = cx + dx;
+    pts[2][1] = cy - dy;
+    pts[3][0] = cx + dx;
+    pts[3][1] = cy - dy;
+
+    pts[4][0] = cx - dx;
+    pts[4][1] = cy + dy;
+    pts[5][0] = cx - dx;
+    pts[5][1] = cy + dy;
+    pts[6][0] = cx - dx;
+    pts[6][1] = cy - dy;
+    pts[7][0] = cx - dx;
+    pts[7][1] = cy - dy;
+
+    for (i=0;i<8;i++){
+        // if (i<4){
+        //     pts[i][0] = cx + dx;
+        // }
+        // else {
+        //     pts[i][0] = cx - dx;
+        // }
+
+
+
+
+        // if ((i/2)%2){
+        //     pts[i][1] = cy + dy;
+        // }
+        // else{
+        //     pts[i][1] = cy - dy;
+        // }
+        if (i%2){
+            pts[i][2] = cz + dz;
+        }
+        else{
+            pts[i][2] = cz - dz;
+        }
+    }
+
+    displayContornoCubinho(pts);
+
+    glColor3fv(cor::GREEN);
+    glBegin(GL_QUADS);
+    glVertex3fv(pts[2]);
+    glVertex3fv(pts[2+4]);
+    glVertex3fv(pts[3+4]);
+    glVertex3fv(pts[3]);
+    glEnd();
+
+    glColor3fv(cor::BLUE);
+    glBegin(GL_QUADS);
+    glVertex3fv(pts[0]);
+    glVertex3fv(pts[0+4]);
+    glVertex3fv(pts[1+4]);
+    glVertex3fv(pts[1]);
+    glEnd();
+
+    // /*-------------------------------------*/
+
+    /* Topo */
+    glColor3fv(cor::YELLOW);
+    glBegin(GL_QUADS);
+    glVertex3fv(pts[3]);
+    glVertex3fv(pts[3+4]);
+    glVertex3fv(pts[1+4]);
+    glVertex3fv(pts[1]);
+    glEnd();
+
+    /* Base */
+    glColor3fv(cor::WHITE);
+    glBegin(GL_QUADS);
+    glVertex3fv(pts[0]);
+    glVertex3fv(pts[0+4]);
+    glVertex3fv(pts[2+4]);
+    glVertex3fv(pts[2]);
+    glEnd();
+
+    // /*-------------------------------------*/
+
+    glColor3fv(cor::RED);
+    glBegin(GL_QUADS);
+    glVertex3fv(pts[0]);
+    glVertex3fv(pts[1]);
+    glVertex3fv(pts[3]);
+    glVertex3fv(pts[2]);
+    glEnd();
+    
+    glColor3fv(cor::ORANGE);
+    glBegin(GL_QUADS);
+    glVertex3fv(pts[0+4]);
+    glVertex3fv(pts[1+4]);
+    glVertex3fv(pts[3+4]);
+    glVertex3fv(pts[2+4]);
+    glEnd();
+
+    glPopMatrix();
 
 }

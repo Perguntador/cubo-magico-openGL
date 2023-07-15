@@ -1,17 +1,19 @@
 #pragma once
 
-class Cubo{
+class Cubinho{
 private:
     float cx, cy, cz;
+    float rotX = 0;
+    float rotY = 0;
+    float rotZ = 0;
     float largAresta;
 public:
-    Cubo(float _cx = 0.f, float _cy = 0.f, float _cz = 0.f, float _largAresta = 1.f){
+    Cubinho(float _cx = 0.f, float _cy = 0.f, float _cz = 0.f, float _largAresta = 1.f){
         cx = _cx;
         cy = _cy;
         cz = _cz;
         largAresta = _largAresta;
     }
-    void displayCubo();
     void setCX(float _cx){
         cx = _cx;
     }
@@ -26,10 +28,24 @@ public:
         cy = _cy;
         cz = _cz;
     }
-
     void setAresta(float _largAresta){
         largAresta = _largAresta;
     }
+
+    void setRX(float _rotX){
+        rotX = _rotX;
+    }
+    void setRY(float _rotY){
+        rotY = _rotY;
+    }
+    void setRZ(float _rotZ){
+        rotZ = _rotZ;
+    }
+
+
+
+    void displayCubinhoPolar();
+    void displayCubinho();
 
 };
 
