@@ -28,6 +28,7 @@ Cubo::Cubo (float _cx = 0.f, float _cy = 0.f, float _cz = 0.f, float _largAresta
         cubinhos[i].cx = cx + (-1+i/3%3)*largAresta;
         cubinhos[i].largAresta = largAresta;
         mapa[i] = true;
+        mapa2[i] = i;
     }
 }
 
@@ -56,9 +57,9 @@ void Cubo::tecla1(){
 
     int k;
     for (int i = 0; i < 9; i++){
-        // k = (i/3)*9+(i%3)+6; // lado vermelho
-        // k = (i/3)*9+(i%3); // lado laranja
-        k = i*3+2; // lado azul
+        // k = (i/3)*9+(i%3)+6; // lado laranha
+        k = (i/3)*9+(i%3); // lado vermelho
+        // k = i*3+2; // lado azul
         // k = i*3; // lado verde
         // k = i; // lado branco
         // k = i+18; // lado amarelo 
@@ -68,8 +69,8 @@ void Cubo::tecla1(){
     // lado amarelo (18,19,20,21,22,23,24,25,26)
     // lado verde (0,3,6,9,12,15,18,21,24)
     // lado azul (2,5,8,11,14,17,20,23,26)
-    // lado laranja (0,1,2,9,10,11,18,19,20)
-    // lado vermelho (6,7,8,15,16,17,24,25,26)
+    // lado vermelho (0,1,2,9,10,11,18,19,20)
+    // lado laranha (6,7,8,15,16,17,24,25,26)
 
 
 }
@@ -180,47 +181,13 @@ void giraAzulAntiHorario(int id){
 }
 
 
-void giraVermelhoHorario(int id){
-    Cubo *cubo = pCubos[id];
-    int k;
-    cubo->rotTemp += DR;
-    for (int i = 0; i < 9; i++){
-        k = (i/3)*9+(i%3)+6; // lado vermelho
-        cubo->cubinhos[k].rotX -= DR;
-    }
-    if (cubo->rotTemp < 90)
-        glutTimerFunc(DELAY,giraVermelhoHorario,id);
-    else{
-        cubo->rotTemp = 0;
-        cubo->flagRot = false;
-    }
-    glutPostRedisplay();
-}
-
-void giraVermelhoAntiHorario(int id){
-    Cubo *cubo = pCubos[id];
-    int k;
-    cubo->rotTemp += DR;
-    for (int i = 0; i < 9; i++){
-        k = (i/3)*9+(i%3)+6; // lado vermelho
-        cubo->cubinhos[k].rotX += DR;
-    }
-    if (cubo->rotTemp < 90)
-        glutTimerFunc(DELAY,giraVermelhoAntiHorario,id);
-    else{
-        cubo->rotTemp = 0;
-        cubo->flagRot = false;
-    }
-    glutPostRedisplay();
-}
-
 void giraLaranjaHorario(int id){
     Cubo *cubo = pCubos[id];
     int k;
     cubo->rotTemp += DR;
     for (int i = 0; i < 9; i++){
-        k = (i/3)*9+(i%3); // lado laranja
-        cubo->cubinhos[k].rotX += DR;
+        k = (i/3)*9+(i%3)+6; // lado laranha
+        cubo->cubinhos[k].rotX -= DR;
     }
     if (cubo->rotTemp < 90)
         glutTimerFunc(DELAY,giraLaranjaHorario,id);
@@ -236,11 +203,45 @@ void giraLaranjaAntiHorario(int id){
     int k;
     cubo->rotTemp += DR;
     for (int i = 0; i < 9; i++){
-        k = (i/3)*9+(i%3); // lado laranja
-        cubo->cubinhos[k].rotX -= DR;
+        k = (i/3)*9+(i%3)+6; // lado laranha
+        cubo->cubinhos[k].rotX += DR;
     }
     if (cubo->rotTemp < 90)
         glutTimerFunc(DELAY,giraLaranjaAntiHorario,id);
+    else{
+        cubo->rotTemp = 0;
+        cubo->flagRot = false;
+    }
+    glutPostRedisplay();
+}
+
+void giraVermelhoHorario(int id){
+    Cubo *cubo = pCubos[id];
+    int k;
+    cubo->rotTemp += DR;
+    for (int i = 0; i < 9; i++){
+        k = (i/3)*9+(i%3); // lado vermelho
+        cubo->cubinhos[k].rotX += DR;
+    }
+    if (cubo->rotTemp < 90)
+        glutTimerFunc(DELAY,giraVermelhoHorario,id);
+    else{
+        cubo->rotTemp = 0;
+        cubo->flagRot = false;
+    }
+    glutPostRedisplay();
+}
+
+void giraVermelhoAntiHorario(int id){
+    Cubo *cubo = pCubos[id];
+    int k;
+    cubo->rotTemp += DR;
+    for (int i = 0; i < 9; i++){
+        k = (i/3)*9+(i%3); // lado vermelho
+        cubo->cubinhos[k].rotX -= DR;
+    }
+    if (cubo->rotTemp < 90)
+        glutTimerFunc(DELAY,giraVermelhoAntiHorario,id);
     else{
         cubo->rotTemp = 0;
         cubo->flagRot = false;

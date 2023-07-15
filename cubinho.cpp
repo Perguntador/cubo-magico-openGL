@@ -134,7 +134,7 @@ void Cubinho::displayCubinho(){
 
     // /*-------------------------------------*/
 
-    glColor3fv(cor::RED);
+    glColor3fv(cor::ORANGE);
     glBegin(GL_QUADS);
     glVertex3fv(pts[0]);
     glVertex3fv(pts[1]);
@@ -142,7 +142,7 @@ void Cubinho::displayCubinho(){
     glVertex3fv(pts[2]);
     glEnd();
     
-    glColor3fv(cor::ORANGE);
+    glColor3fv(cor::RED);
     glBegin(GL_QUADS);
     glVertex3fv(pts[0+4]);
     glVertex3fv(pts[1+4]);
@@ -270,7 +270,7 @@ void Cubinho::displayCubinhoPolar(){
 
     // /*-------------------------------------*/
 
-    glColor3fv(cor::RED);
+    glColor3fv(cor::ORANGE);
     glBegin(GL_QUADS);
     glVertex3fv(pts[0]);
     glVertex3fv(pts[1]);
@@ -278,7 +278,7 @@ void Cubinho::displayCubinhoPolar(){
     glVertex3fv(pts[2]);
     glEnd();
     
-    glColor3fv(cor::ORANGE);
+    glColor3fv(cor::RED);
     glBegin(GL_QUADS);
     glVertex3fv(pts[0+4]);
     glVertex3fv(pts[1+4]);

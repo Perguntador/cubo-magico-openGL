@@ -5,6 +5,7 @@ class Cubo{
 private:
     float cx, cy, cz;
     Cubinho cubinhos[27];
+    int mapa2[27];
     bool mapa[27];
     bool flagRot = false;
     float largAresta;
