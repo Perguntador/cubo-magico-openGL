@@ -1,0 +1,256 @@
+eixo x: sentido do laranja
+eixo y: sentido do azul
+eixo z: sentido do amarelo
+
+
+201 V
+102 V
+232 F
+131 F
+
+111 V
+212 V
+221 F
+122 F
+
+021 V
+322 V
+311 F
+012 F
+
+331 V
+032 V
+001 F
+302 F
+
+120 V
+223 V
+210 F
+113 F
+
+230 V
+133 V
+100 F
+203 F
+
+300 V
+003 V
+030 F
+333 F
+
+010 V
+313 V
+320 F
+023 F
+
+
+Se (z==1)
+(x+y)%4==2
+201
+111
+021
+331
+
+(x+y)%4==0
+131
+221
+311
+001
+
+
+Se (z==2)
+(4+x-y)%4==1
+102
+212
+322
+032
+
+(4+x-y)%4==3
+232
+122
+012
+302
+
+
+Se (z==3)
+(x+y)%4==0
+223
+133
+003
+313
+
+(x+y)%4==2
+113
+203
+333
+023
+
+
+Se (z==0)
+(4+x-y)%4==3
+120
+230
+300
+010
+
+(4+x-y)%4==1
+210
+100
+030
+320
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+320
+313
+010
+023
+
+203
+230
+100
+133
+
+133
+230
+100
+203
+
+302
+001
+331
+032
+
+
+
+
+
+
+
+
+
+rotação eixo y
+
+azul
+0y0 OK
+2y2 OK
+301 OK
+103 OK
+121 OK
+323 OK
+
+verde
+2y0 OK
+0y2 OK
+303 OK
+101 OK
+321 OK
+123 OK
+
+laranja
+0y1 OK
+2y3 OK
+100 OK
+302 OK
+320 OK
+122 OK
+
+vermelho
+2y1 OK
+0y3 OK
+300 OK
+102 OK
+322 OK
+120 OK
+
+amarelo
+11z OK
+33z OK
+
+branco
+31z OK
+13z OK
+
+
+
+
+
+
+
+
+rotação eixo x
+
+azul
+3y0 OK
+0y3 OK
+201 OK
+102 OK
+021 OK
+223 OK
+
+verde
+1y0 OK
+3y2 OK
+001 OK
+203 OK
+023 OK
+221 OK
+
+laranja
+1y3 OK
+3y1 OK
+000 OK
+202 OK
+220 OK
+022 OK
+
+vermelho
+3y3 OK
+1y1 OK
+200 OK
+020 OK
+002 OK
+222 OK
+
+amarelo
+23z OK
+01z OK
+
+branco
+03z OK
+21z OK
+
+
+

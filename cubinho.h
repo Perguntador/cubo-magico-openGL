@@ -45,6 +45,7 @@ public:
 
 
     void displayCubinhoPolar();
+    void displayCubinhoPolar2();
     void displayCubinho();
     friend class Cubo;
 

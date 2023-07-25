@@ -124,6 +124,24 @@ void teclado(unsigned char key, int x, int y) {
     cubo2.tecla7();
 	glutPostRedisplay();
 	break;
+  case '8':
+    cubo2.tecla8();
+	glutPostRedisplay();
+	break;
+  case '9':
+    cubo2.tecla9();
+	glutPostRedisplay();
+	break;
+  case '0':
+    cubo2.tecla0();
+	glutPostRedisplay();
+	break;
+  case '.':
+    cubo2.teclaPonto();
+	glutPostRedisplay();
+	break;
+
+	
 
   case 'r':
     cubo2.vermelhoHorario();
@@ -168,9 +186,6 @@ void teclado(unsigned char key, int x, int y) {
 
 
 
-
-
-
   case ' ':
     cubo2.printId();
 	glutPostRedisplay();
@@ -194,7 +209,7 @@ int main(int argc, char **argv){
 
 	// cubos[0].setCentro(1,1,1);
 
-
+	// cout << (360+(20%360))%360<<endl;
 
 
     glutInit(&argc, argv);

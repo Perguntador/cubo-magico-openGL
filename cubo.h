@@ -4,6 +4,9 @@
 class Cubo{
 private:
     float cx, cy, cz;
+    float rotsX[27];
+    float rotsY[27];
+    float rotsZ[27];
     Cubinho cubinhos[27];
     int mapa2[27];
     bool mapa[27];
@@ -22,6 +25,12 @@ public:
     void tecla5();
     void tecla6();
     void tecla7();
+    void tecla8();
+    void tecla9();
+    void tecla0();
+    void teclaPonto();
+
+    void rearranjaMapa(char c);
 
     void verdeHorario();
     void azulHorario();
@@ -37,6 +46,9 @@ public:
     void amareloAntiHorario();
     void brancoAntiHorario();
     
+    void ladoXHorario(float dr, char cor);
+    void ladoYHorario(float dr, char cor);
+    void ladoZHorario(float dr, char cor);
 
     friend void giraVerdeHorario(int id);
     friend void giraAzulHorario(int id);
