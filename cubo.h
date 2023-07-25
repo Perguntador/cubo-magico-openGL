@@ -1,8 +1,8 @@
 #pragma once
 #include "cubinho.h"
 
-class Cubo{
-private:
+class Cubo {
+  private:
     float cx, cy, cz;
     float rotsX[27];
     float rotsY[27];
@@ -16,12 +16,11 @@ private:
     int id_;
     static int proxId_;
 
-
     void ladoXHorario(float dr, char cor);
     void ladoYHorario(float dr, char cor);
     void ladoZHorario(float dr, char cor);
 
-public:
+  public:
     Cubo(float _cx = 0.0f, float _cy = 0.0f, float _cz = 0.0f, float _largAresta = 1.0f);
 
     void displayCubo();
@@ -46,14 +45,13 @@ public:
     void laranjaHorario();
     void amareloHorario();
     void brancoHorario();
-    
+
     void verdeAntiHorario();
     void azulAntiHorario();
     void vermelhoAntiHorario();
     void laranjaAntiHorario();
     void amareloAntiHorario();
     void brancoAntiHorario();
-    
 
     friend void giraVerdeHorario(int id);
     friend void giraAzulHorario(int id);
@@ -70,6 +68,4 @@ public:
     friend void giraBrancoAntiHorario(int id);
 
     void printId();
-
 };
-
