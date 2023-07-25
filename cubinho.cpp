@@ -1,7 +1,6 @@
 #include "cubinho.h"
 #include <iostream>
 #include <GL/glut.h>
-#include <cmath>
 
 using namespace std;
 
@@ -16,8 +15,8 @@ namespace cor{
 
 
 void displayContornoCubinho(float pts[8][3]){
-    // glColor3f(1,1,1);
-    glColor3f(0,0,0);
+    glColor3f(0,0.5,0.5);
+    glLineWidth(2.0f);
 
     glBegin(GL_LINE_LOOP);
     glVertex3fv(pts[0]);
@@ -159,47 +158,18 @@ void Cubinho::displayCubinhoPolar2(){
     int i;
     float pts[8][3];
     float d = largAresta / 2.f;
-    float raioc = cbrt(cx*cy*cz);
-    float dr = d*sqrt(2);
     float dx, dy, dz;
-    float rx, ry, rz;
-    // dx = dr * cos(rotX);
-    // dz = - dr * cos(rotX);
-
-
-    // cout << "Raio: "<< raioc << endl;
-
-    // rotX += 1;
-
-    // pts[0]
-
-    // dx = dr*cos(rotX);
-
-    // dx = dr*cos
 
     dx = d;
     dy = d;
     dz = d;
 
     glPushMatrix();
-    // cout << "aqui\n";
-
-    rx = (360+(int(rotX)%360))%360/360.f;
-    ry = (360+(int(rotY)%360))%360/360.f;
-    rz = (360+(int(rotZ)%360))%360/360.f;
-    // cout << rx << "\n";
-    // cout << ry << "\n";
-    // cout << rz << "\n\n\n";
-    // glRotatef(90.f,rx,ry,rz);
-    // glRotatef()
-
 
     glTranslatef(cx, cy, cz);
-    // glRotatef(rotX,1,0,0);
     glRotatef(rotX,0,0,1);
     glRotatef(rotY,0,1,0);
     glRotatef(rotZ,0,0,1);
-    
 
     pts[0][0] = dx;
     pts[0][1] = dy;
@@ -220,22 +190,6 @@ void Cubinho::displayCubinhoPolar2(){
     pts[7][1] = - dy;
 
     for (i=0;i<8;i++){
-        // if (i<4){
-        //     pts[i][0] = cx + dx;
-        // }
-        // else {
-        //     pts[i][0] = cx - dx;
-        // }
-
-
-
-
-        // if ((i/2)%2){
-        //     pts[i][1] = cy + dy;
-        // }
-        // else{
-        //     pts[i][1] = cy - dy;
-        // }
         if (i%2){
             pts[i][2] = dz;
         }
@@ -311,26 +265,10 @@ void Cubinho::displayCubinhoPolar(){
     int i;
     float pts[8][3];
     float d = largAresta / 2.f;
-    float raioc = cbrt(cx*cy*cz);
-    float dr = d*sqrt(2);
     float dx, dy, dz;
-    dx = dr * cos(rotX);
-    dy = d;
-    // dz = - dr * cos(rotX);
-    dz = d;
-
-
-    // cout << "Raio: "<< raioc << endl;
-
-    // rotX += 1;
-
-    // pts[0]
-
-    // dx = dr*cos(rotX);
-
-    // dx = dr*cos
-
     dx = d;
+    dy = d;
+    dz = d;
 
     glPushMatrix();
     // cout << "aqui\n";

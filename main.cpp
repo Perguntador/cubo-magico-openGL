@@ -1,23 +1,18 @@
 #include <iostream>
 #include <GL/glut.h>
-#include <cmath>
-#include "cubinho.h"
 #include "cubo.h"
 
 
 Cubo cubo1(0,0,0,1);
 
-Cubo cubo2(0,0,0,1);
-
-// Cubinho cubo1;
-
-// Cubinho *cubos;
+Cubo cubo2;
+Cubo cubo3(1.7,3.2,2,2.7);
 
 float dOrtho = 5;
 
 float theta = 135;
 float phi = 45;
-float gamma1 = 90;
+float gamma = 90;
 float s = 1;
 
 bool mov = false;
@@ -33,7 +28,7 @@ void config(){
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glRotatef(gamma1, 0, 0, 1);
+	glRotatef(gamma, 0, 0, 1);
 	glRotatef(phi, 0, 1, 0);
 	glRotatef(theta, 0, 0, 1);
 	glScalef(s, s, s);
@@ -44,14 +39,7 @@ void display(){
 	glClearColor(0,0,0,0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// cubo1.displayCubinho();
-	// for(int i = 0; i < 27; i++)
-	// 	cubos[i].displayCubinho();
-
 	cubo2.displayCubo();
-
-	// cubos[13].displayCubinho();
-	// cubos[26].displayCubinhoPolar();
 
 	glutSwapBuffers();
 
@@ -180,10 +168,17 @@ void teclado(unsigned char key, int x, int y) {
     cubo2.laranjaAntiHorario();
 	break;
 
+   case '+':
+    s *= 1.1;
+		config();
+		glutPostRedisplay();
+    break;
 
-
-
-
+  case '-':
+    s /= 1.1;
+		config();
+		glutPostRedisplay();
+    break;
 
 
   case ' ':
@@ -198,35 +193,19 @@ void teclado(unsigned char key, int x, int y) {
 
 int main(int argc, char **argv){
 	int i;
-	// cubos = new Cubinho[27];
-	
-	// for(i = 0; i < 27; i++){
-	// 	cubos[i].setCZ(-1+i/9%3);
-	// 	cubos[i].setCY(-1+i%3);
-	// 	cubos[i].setCX(-1+i/3%3);
-	// }
-
-
-	// cubos[0].setCentro(1,1,1);
-
-	// cout << (360+(20%360))%360<<endl;
-
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 	glutInitWindowSize(400, 400);
-	glutCreateWindow("3D");
+	glutCreateWindow("Cubo Magico 3D (JAS)");
 	config();
 	glutDisplayFunc(display);
-	// glutKeyboardFunc(teclado);
 	glutKeyboardFunc(teclado);
-	//	glutIdleFunc(executa);
-
+	// glutIdleFunc(executa);
 	glutMouseFunc(botao);
 	glutMotionFunc(botao_mov);
 
 	glutMainLoop();
-
 
     return 0;
 }

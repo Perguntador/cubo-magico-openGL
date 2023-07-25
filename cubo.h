@@ -15,8 +15,16 @@ private:
     float rotTemp = 0;
     int id_;
     static int proxId_;
+
+
+    void ladoXHorario(float dr, char cor);
+    void ladoYHorario(float dr, char cor);
+    void ladoZHorario(float dr, char cor);
+
 public:
-    Cubo (float _cx, float _cy, float _cz, float _largAresta);
+    Cubo(float _cx = 0.0f, float _cy = 0.0f, float _cz = 0.0f, float _largAresta = 1.0f);
+
+    void displayCubo();
 
     void tecla1();
     void tecla2();
@@ -46,9 +54,6 @@ public:
     void amareloAntiHorario();
     void brancoAntiHorario();
     
-    void ladoXHorario(float dr, char cor);
-    void ladoYHorario(float dr, char cor);
-    void ladoZHorario(float dr, char cor);
 
     friend void giraVerdeHorario(int id);
     friend void giraAzulHorario(int id);
@@ -64,11 +69,7 @@ public:
     friend void giraAmareloAntiHorario(int id);
     friend void giraBrancoAntiHorario(int id);
 
-
     void printId();
-
-    void displayCubo();
-    
 
 };
 

@@ -6,8 +6,7 @@
 
 #define DR 10
 #define DELAY 10
-// #define PI 3.141592
-#define PI M_PI
+
 using namespace std;
 
 int j = 0;
@@ -18,7 +17,7 @@ int Cubo::proxId_ = 0;
 
 
 float grau2rad(float grau){
-    return grau/180.*PI;
+    return grau/180.*M_PI;
 }
 
 /*
@@ -28,7 +27,7 @@ eixo z: sentido do amarelo
 */
 
 
-Cubo::Cubo (float _cx = 0.f, float _cy = 0.f, float _cz = 0.f, float _largAresta = 1.f) : id_(proxId_++) {
+Cubo::Cubo (float _cx, float _cy, float _cz, float _largAresta) : id_(proxId_++) {
     pCubos[id_] = this;
     cx = _cx;
     cy = _cy;
@@ -37,12 +36,12 @@ Cubo::Cubo (float _cx = 0.f, float _cy = 0.f, float _cz = 0.f, float _largAresta
     largAresta = _largAresta;
 
     for(int i = 0; i < 27; i++){
+        // coordenadas cartesianas
         cubinhos[i].cz = cz + (-1+i/9%3)*largAresta;
         cubinhos[i].cy = cy + (-1+i%3)*largAresta;
         cubinhos[i].cx = cx + (-1+i/3%3)*largAresta;
         cubinhos[i].largAresta = largAresta;
-        // mapa[i] = true;
-        mapa[i] = false;
+        mapa[i] = true;
         mapa2[i] = i;
 
         rotsX[i] = 0;
@@ -51,28 +50,13 @@ Cubo::Cubo (float _cx = 0.f, float _cy = 0.f, float _cz = 0.f, float _largAresta
 
     }
 
-
-
-
     int k;
     float larg, rx, ry, rz;
 
-    j=0;
     for (int i = 0; i < 27; i++){
-        // k = i*3+1;
-        // k = (i/3)*9+(i%3)+3;
-        // k=i+9;
 
         k=i;
         k = mapa2[k];
-        // if (i==13 || i == j){
-        // if (i==13 || i == 0 || i == 2 || i == 6 || i == 8 || i == 18 || i == 20 || i == 24 || i == 26){
-        // if (i==13 || i == 1 || i == 3 || i == 5 || i == 7 || i == 19 || i == 21 || i == 23 || i == 25){
-        // if (i==13 || i == 9 || i == 11 || i == 15 || i == 17){
-        // if (i==13 || i == 1 || i == 3 || i == 5 || i == 7 || i == 19 || i == 21 || i == 23 || i == 25 || i == 9 || i == 11 || i == 15 || i == 17){
-        if (i==13 || i == j){
-            // mapa[k]=true;
-        }
 
         if (i == 17){
             larg = largAresta;
@@ -80,351 +64,183 @@ Cubo::Cubo (float _cx = 0.f, float _cy = 0.f, float _cz = 0.f, float _largAresta
             rotsX[k] = 90*0;
             rotsY[k] = 90*0;
             rotsZ[k] = 90*1;
-
-            rx = grau2rad(rotsX[k]);
-            ry = grau2rad(rotsY[k]);
-            rz = grau2rad(rotsZ[k]);
-            
-            cubinhos[k].cx =  cos(rx)*larg;
-            cubinhos[k].cy =  cos(ry)*larg;
-            cubinhos[k].cz =  cos(rz)*larg;
         }
 
-        if (i == 15){
+        else if (i == 15){
             larg = largAresta;
 
             rotsX[k] = 90*0;
             rotsY[k] = 90*2;
             rotsZ[k] = 90*1;
-
-            rx = grau2rad(rotsX[k]);
-            ry = grau2rad(rotsY[k]);
-            rz = grau2rad(rotsZ[k]);
-            
-            cubinhos[k].cx =  cos(rx)*larg;
-            cubinhos[k].cy =  cos(ry)*larg;
-            cubinhos[k].cz =  cos(rz)*larg;
         }
 
-        if (i == 11){
+        else if (i == 11){
             larg = largAresta;
 
             rotsX[k] = 90*2;
             rotsY[k] = 90*0;
             rotsZ[k] = 90*1;
-
-            rx = grau2rad(rotsX[k]);
-            ry = grau2rad(rotsY[k]);
-            rz = grau2rad(rotsZ[k]);
-            
-            cubinhos[k].cx =  cos(rx)*larg;
-            cubinhos[k].cy =  cos(ry)*larg;
-            cubinhos[k].cz =  cos(rz)*larg;
         }
 
-        if (i == 9){
+        else if (i == 9){
             larg = largAresta;
 
             rotsX[k] = 90*2;
             rotsY[k] = 90*2;
             rotsZ[k] = 90*1;
-
-            rx = grau2rad(rotsX[k]);
-            ry = grau2rad(rotsY[k]);
-            rz = grau2rad(rotsZ[k]);
-            
-            cubinhos[k].cx =  cos(rx)*larg;
-            cubinhos[k].cy =  cos(ry)*larg;
-            cubinhos[k].cz =  cos(rz)*larg;
         }
 
-        if (i == 25){
+        else if (i == 25){
             larg = largAresta;
 
             rotsX[k] = 90*0;
             rotsY[k] = 90*3;
             rotsZ[k] = 90*0;
-
-            rx = grau2rad(rotsX[k]);
-            ry = grau2rad(rotsY[k]);
-            rz = grau2rad(rotsZ[k]);
-            
-            cubinhos[k].cx =  cos(rx)*larg;
-            cubinhos[k].cy =  cos(ry)*larg;
-            cubinhos[k].cz =  cos(rz)*larg;
         }
 
-        if (i == 23){
+        else if (i == 23){
             larg = largAresta;
 
             rotsX[k] = 90*1;
             rotsY[k] = 90*0;
             rotsZ[k] = 90*0;
-
-            rx = grau2rad(rotsX[k]);
-            ry = grau2rad(rotsY[k]);
-            rz = grau2rad(rotsZ[k]);
-            
-            cubinhos[k].cx =  cos(rx)*larg;
-            cubinhos[k].cy =  cos(ry)*larg;
-            cubinhos[k].cz =  cos(rz)*larg;
         }
 
-        if (i == 21){
+        else if (i == 21){
             larg = largAresta;
 
             rotsX[k] = 90*3;
             rotsY[k] = 90*2;
             rotsZ[k] = 90*0;
-
-            rx = grau2rad(rotsX[k]);
-            ry = grau2rad(rotsY[k]);
-            rz = grau2rad(rotsZ[k]);
-            
-            cubinhos[k].cx =  cos(rx)*larg;
-            cubinhos[k].cy =  cos(ry)*larg;
-            cubinhos[k].cz =  cos(rz)*larg;
         }
 
-        if (i == 19){
+        else if (i == 19){
             larg = largAresta;
 
             rotsX[k] = 90*2;
             rotsY[k] = 90*1;
             rotsZ[k] = 90*0;
-
-            rx = grau2rad(rotsX[k]);
-            ry = grau2rad(rotsY[k]);
-            rz = grau2rad(rotsZ[k]);
-            
-            cubinhos[k].cx =  cos(rx)*larg;
-            cubinhos[k].cy =  cos(ry)*larg;
-            cubinhos[k].cz =  cos(rz)*larg;
         }
 
-        if (i == 7){
+        else if (i == 7){
             larg = largAresta;
 
             rotsX[k] = 90*0;
             rotsY[k] = 90*3;
             rotsZ[k] = 90*2;
-
-            rx = grau2rad(rotsX[k]);
-            ry = grau2rad(rotsY[k]);
-            rz = grau2rad(rotsZ[k]);
-            
-            cubinhos[k].cx =  cos(rx)*larg;
-            cubinhos[k].cy =  cos(ry)*larg;
-            cubinhos[k].cz =  cos(rz)*larg;
         }
 
-        if (i == 5){
+        else if (i == 5){
             larg = largAresta;
 
             rotsX[k] = 90*1;
             rotsY[k] = 90*0;
             rotsZ[k] = 90*2;
-
-            rx = grau2rad(rotsX[k]);
-            ry = grau2rad(rotsY[k]);
-            rz = grau2rad(rotsZ[k]);
-            
-            cubinhos[k].cx =  cos(rx)*larg;
-            cubinhos[k].cy =  cos(ry)*larg;
-            cubinhos[k].cz =  cos(rz)*larg;
         }
 
-        if (i == 3){
+        else if (i == 3){
             larg = largAresta;
 
             rotsX[k] = 90*3;
             rotsY[k] = 90*2;
             rotsZ[k] = 90*2;
-
-            rx = grau2rad(rotsX[k]);
-            ry = grau2rad(rotsY[k]);
-            rz = grau2rad(rotsZ[k]);
-            
-            cubinhos[k].cx =  cos(rx)*larg;
-            cubinhos[k].cy =  cos(ry)*larg;
-            cubinhos[k].cz =  cos(rz)*larg;
         }
 
-        if (i == 1){
+        else if (i == 1){
             larg = largAresta;
 
             rotsX[k] = 90*2;
             rotsY[k] = 90*1;
             rotsZ[k] = 90*2;
-
-            rx = grau2rad(rotsX[k]);
-            ry = grau2rad(rotsY[k]);
-            rz = grau2rad(rotsZ[k]);
-            
-            cubinhos[k].cx =  cos(rx)*larg;
-            cubinhos[k].cy =  cos(ry)*larg;
-            cubinhos[k].cz =  cos(rz)*larg;
         }
 
-        if (i == 26){
-            larg = sqrt(largAresta*2);
+        else if (i == 26){
+            larg = sqrt(2)*largAresta;
 
             rotsX[k] = 45+90*3;
             rotsY[k] = 45+90*0;
             rotsZ[k] = 45+90*0;
-
-            rx = grau2rad(rotsX[k]);
-            ry = grau2rad(rotsY[k]);
-            rz = grau2rad(rotsZ[k]);
-            
-            cubinhos[k].cx =  cos(rx)*larg;
-            cubinhos[k].cy =  cos(ry)*larg;
-            cubinhos[k].cz =  cos(rz)*larg;
         }
 
 
-        if (i == 24){
-            larg = sqrt(largAresta*2);
+        else if (i == 24){
+            larg = sqrt(2)*largAresta;
 
             rotsX[k] = 45+90*0;
             rotsY[k] = 45+90*1;
             rotsZ[k] = 45+90*0;
-
-            rx = grau2rad(rotsX[k]);
-            ry = grau2rad(rotsY[k]);
-            rz = grau2rad(rotsZ[k]);
-            
-            cubinhos[k].cx =  cos(rx)*larg;
-            cubinhos[k].cy =  cos(ry)*larg;
-            cubinhos[k].cz =  cos(rz)*larg;
         }
 
-
-        if (i == 20){
-            larg = sqrt(largAresta*2);
+        else if (i == 20){
+            larg = sqrt(2)*largAresta;
 
             rotsX[k] = 45+90*2;
             rotsY[k] = 45+90*3;
             rotsZ[k] = 45+90*0;
-
-            rx = grau2rad(rotsX[k]);
-            ry = grau2rad(rotsY[k]);
-            rz = grau2rad(rotsZ[k]);
-            
-            cubinhos[k].cx =  cos(rx)*larg;
-            cubinhos[k].cy =  cos(ry)*larg;
-            cubinhos[k].cz =  cos(rz)*larg;
         }
 
-
-        if (i == 18){
-            larg = sqrt(largAresta*2);
+        else if (i == 18){
+            larg = sqrt(2)*largAresta;
 
             rotsX[k] = 45+90*1;
             rotsY[k] = 45+90*2;
             rotsZ[k] = 45+90*0;
-
-            rx = grau2rad(rotsX[k]);
-            ry = grau2rad(rotsY[k]);
-            rz = grau2rad(rotsZ[k]);
-            
-            cubinhos[k].cx =  cos(rx)*larg;
-            cubinhos[k].cy =  cos(ry)*larg;
-            cubinhos[k].cz =  cos(rz)*larg;
         }
 
-        if (i == 8){
-            larg = sqrt(largAresta*2);
+        else if (i == 8){
+            larg = sqrt(2)*largAresta;
 
             rotsX[k] = 45+90*3;
             rotsY[k] = 45+90*3;
             rotsZ[k] = 45+90*1;
-
-            rx = grau2rad(rotsX[k]);
-            ry = grau2rad(rotsY[k]);
-            rz = grau2rad(rotsZ[k]);
-            
-            cubinhos[k].cx =  cos(rx)*larg;
-            cubinhos[k].cy =  cos(ry)*larg;
-            cubinhos[k].cz =  cos(rz)*larg;
         }
 
-
-        if (i == 6){
-            larg = sqrt(largAresta*2);
+        else if (i == 6){
+            larg = sqrt(2)*largAresta;
 
             rotsX[k] = 45+90*0;
             rotsY[k] = 45+90*2;
             rotsZ[k] = 45+90*1;
-
-            rx = grau2rad(rotsX[k]);
-            ry = grau2rad(rotsY[k]);
-            rz = grau2rad(rotsZ[k]);
-            
-            cubinhos[k].cx =  cos(rx)*larg;
-            cubinhos[k].cy =  cos(ry)*larg;
-            cubinhos[k].cz =  cos(rz)*larg;
         }
 
-
-        if (i == 2){
-            larg = sqrt(largAresta*2);
+        else if (i == 2){
+            larg = sqrt(2)*largAresta;
 
             rotsX[k] = 45+90*2;
             rotsY[k] = 45+90*0;
             rotsZ[k] = 45+90*1;
-
-            rx = grau2rad(rotsX[k]);
-            ry = grau2rad(rotsY[k]);
-            rz = grau2rad(rotsZ[k]);
-            
-            cubinhos[k].cx =  cos(rx)*larg;
-            cubinhos[k].cy =  cos(ry)*larg;
-            cubinhos[k].cz =  cos(rz)*larg;
         }
 
-
-
-
-        if (i == 0){
-            larg = sqrt(largAresta*2);
+        else if (i == 0){
+            larg = sqrt(2)*largAresta;
 
             rotsX[k] = 45+90*1;
             rotsY[k] = 45+90*1;
             rotsZ[k] = 45+90*1;
-
-            rx = grau2rad(rotsX[k]);
-            ry = grau2rad(rotsY[k]);
-            rz = grau2rad(rotsZ[k]);
-            
-            cubinhos[k].cx =  cos(rx)*larg;
-            cubinhos[k].cy =  cos(ry)*larg;
-            cubinhos[k].cz =  cos(rz)*larg;
         }
 
+        else{
+            continue;
+        }
+
+
+        rx = grau2rad(rotsX[k]);
+        ry = grau2rad(rotsY[k]);
+        rz = grau2rad(rotsZ[k]);
+        
+        cubinhos[k].cx =  cos(rx)*larg + cx;
+        cubinhos[k].cy =  cos(ry)*larg + cy;
+        cubinhos[k].cz =  cos(rz)*larg + cz;
     }
 
 
 
-/*
-eixo x: sentido do laranja
-eixo y: sentido do azul
-eixo z: sentido do amarelo
-*/
-
-
     /*
-        if (i==4){
-                // cubinhos[k].rotX -= DR;
-                continue;
-            }
-            else if (i%2){
-                larg = largAresta;
-            }
-            else{
-                larg = sqrt(largAresta*2);
-            }
-    // */
+    eixo x: sentido do laranja
+    eixo y: sentido do azul
+    eixo z: sentido do amarelo
+    */
+
 
     for (int i = 0; i < 9; i++){
         // k = (i/3)*9+(i%3)+6; // lado laranja
@@ -1065,7 +881,7 @@ void Cubo::tecla6(){
 
         else if (k == 0 || k == 2 || k == 6 || k == 8 || k == 18 || k == 20 || k == 24 || k == 26){
         
-            larg = sqrt(largAresta*2);
+            larg = sqrt(2)*largAresta;
 
             
             if (modZ == 1 && (modX+modY)%4==0){
@@ -1111,9 +927,9 @@ void Cubo::tecla6(){
         ry = grau2rad(rotsY[k]);
         rz = grau2rad(rotsZ[k]);
         
-        cubinhos[k].cx =  cos(rx)*larg;
-        cubinhos[k].cy =  cos(ry)*larg;
-        cubinhos[k].cz =  cos(rz)*larg;
+        cubinhos[k].cx =  cos(rx)*larg + cx;
+        cubinhos[k].cy =  cos(ry)*larg + cy;
+        cubinhos[k].cz =  cos(rz)*larg + cz;
         
     }
     // cout << endl;
@@ -1186,7 +1002,7 @@ void Cubo::tecla7(){
         }
 
         else if (k == 0 || k == 2 || k == 6 || k == 8 || k == 18 || k == 20 || k == 24 || k == 26){
-            larg = sqrt(largAresta*2);
+            larg = sqrt(2)*largAresta;
 
             modX = (360+(int(rotsX[k])%360))%360 / 90;
             modY = (360+(int(rotsY[k])%360))%360 / 90;
@@ -1236,9 +1052,9 @@ void Cubo::tecla7(){
         ry = grau2rad(rotsY[k]);
         rz = grau2rad(rotsZ[k]);
         
-        cubinhos[k].cx =  cos(rx)*larg;
-        cubinhos[k].cy =  cos(ry)*larg;
-        cubinhos[k].cz =  cos(rz)*larg;
+        cubinhos[k].cx =  cos(rx)*larg + cx;
+        cubinhos[k].cy =  cos(ry)*larg + cy;
+        cubinhos[k].cz =  cos(rz)*larg + cz;
 
     }
 
@@ -1312,7 +1128,7 @@ void Cubo::tecla8(){
         }
 
         else if (k == 0 || k == 2 || k == 6 || k == 8 || k == 18 || k == 20 || k == 24 || k == 26){
-            larg = sqrt(largAresta*2);
+            larg = sqrt(2)*largAresta;
 
             modX = (360+(int(rotsX[k])%360))%360 / 90;
             modY = (360+(int(rotsY[k])%360))%360 / 90;
@@ -1363,9 +1179,9 @@ void Cubo::tecla8(){
         ry = grau2rad(rotsY[k]);
         rz = grau2rad(rotsZ[k]);
         
-        cubinhos[k].cx =  cos(rx)*larg;
-        cubinhos[k].cy =  cos(ry)*larg;
-        cubinhos[k].cz =  cos(rz)*larg;
+        cubinhos[k].cx =  cos(rx)*larg + cx;
+        cubinhos[k].cy =  cos(ry)*larg + cy;
+        cubinhos[k].cz =  cos(rz)*larg + cz;
     }
 
     for (int i = 0; i < 9; i++){
@@ -1446,7 +1262,7 @@ void Cubo::ladoXHorario(float dr, char cor){
         }
 
         else if (k == 0 || k == 2 || k == 6 || k == 8 || k == 18 || k == 20 || k == 24 || k == 26){
-            larg = sqrt(largAresta*2);
+            larg = sqrt(2)*largAresta;
 
             modX = (360+(int(rotsX[k])%360))%360 / 90;
             modY = (360+(int(rotsY[k])%360))%360 / 90;
@@ -1497,9 +1313,9 @@ void Cubo::ladoXHorario(float dr, char cor){
         ry = grau2rad(rotsY[k]);
         rz = grau2rad(rotsZ[k]);
         
-        cubinhos[k].cx =  cos(rx)*larg;
-        cubinhos[k].cy =  cos(ry)*larg;
-        cubinhos[k].cz =  cos(rz)*larg;
+        cubinhos[k].cx =  cos(rx)*larg + cx;
+        cubinhos[k].cy =  cos(ry)*larg + cy;
+        cubinhos[k].cz =  cos(rz)*larg + cz;
     }
 
     for (int i = 0; i < 9; i++){
@@ -1570,7 +1386,7 @@ void Cubo::ladoYHorario(float dr, char cor){
         }
 
         else if (k == 0 || k == 2 || k == 6 || k == 8 || k == 18 || k == 20 || k == 24 || k == 26){
-            larg = sqrt(largAresta*2);
+            larg = sqrt(2)*largAresta;
 
             modX = (360+(int(rotsX[k])%360))%360 / 90;
             modY = (360+(int(rotsY[k])%360))%360 / 90;
@@ -1620,9 +1436,9 @@ void Cubo::ladoYHorario(float dr, char cor){
         ry = grau2rad(rotsY[k]);
         rz = grau2rad(rotsZ[k]);
         
-        cubinhos[k].cx =  cos(rx)*larg;
-        cubinhos[k].cy =  cos(ry)*larg;
-        cubinhos[k].cz =  cos(rz)*larg;
+        cubinhos[k].cx =  cos(rx)*larg + cx;
+        cubinhos[k].cy =  cos(ry)*larg + cy;
+        cubinhos[k].cz =  cos(rz)*larg + cz;
 
     }
 
@@ -1701,7 +1517,7 @@ void Cubo::ladoZHorario(float dr, char cor){
 
         else if (k == 0 || k == 2 || k == 6 || k == 8 || k == 18 || k == 20 || k == 24 || k == 26){
         
-            larg = sqrt(largAresta*2);
+            larg = sqrt(2)*largAresta;
 
             
             if (modZ == 1 && (modX+modY)%4==0){
@@ -1747,9 +1563,9 @@ void Cubo::ladoZHorario(float dr, char cor){
         ry = grau2rad(rotsY[k]);
         rz = grau2rad(rotsZ[k]);
         
-        cubinhos[k].cx =  cos(rx)*larg;
-        cubinhos[k].cy =  cos(ry)*larg;
-        cubinhos[k].cz =  cos(rz)*larg;
+        cubinhos[k].cx =  cos(rx)*larg + cx;
+        cubinhos[k].cy =  cos(ry)*larg + cy;
+        cubinhos[k].cz =  cos(rz)*larg + cz;
         
     }
     // cout << endl;
