@@ -3,9 +3,9 @@
 class Cubinho {
   private:
     float cx, cy, cz;
-    float rotX = 0;
-    float rotY = 0;
-    float rotZ = 0;
+    float rotTheta = 0;
+    float rotPhi = 0;
+    float rotGamma = 0;
     float largAresta;
 
   public:
@@ -27,9 +27,9 @@ class Cubinho {
         cz = _cz;
     }
 
-    void setRX(float _rotX) { rotX = _rotX; }
-    void setRY(float _rotY) { rotY = _rotY; }
-    void setRZ(float _rotZ) { rotZ = _rotZ; }
+    void setTheta(float _rotTheta) { rotTheta = _rotTheta; }
+    void setPhi(float _rotPhi) { rotPhi = _rotPhi; }
+    void setGamma(float _rotGamma) { rotGamma = _rotGamma; }
 
     void displayCubinho();
     friend class Cubo;

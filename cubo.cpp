@@ -4,7 +4,7 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-#define DR 10
+#define DR 5 // divisor de 90 que não seja divisor de 45
 #define DELAY 10
 
 #define MAX_CUBOS 10
@@ -238,34 +238,24 @@ void Cubo::displayCubo() {
 }
 
 void Cubo::tecla9() {
-
     int k;
-    float larg, rx, ry, rz;
-
     k = mapa2[13];
-    cubinhos[k].rotY += DR;
-    // cout << cubinhos[k].rotY << endl;
+    cubinhos[k].rotPhi += DR;
+    // cout << cubinhos[k].rotPhi << endl;
 }
+
 void Cubo::tecla0() {
-
     int k;
-    float larg, rx, ry, rz;
-
     k = mapa2[13];
-    cubinhos[k].rotZ += DR;
-    // cout << cubinhos[k].rotZ << endl;
+    cubinhos[k].rotGamma += DR;
+    // cout << cubinhos[k].rotGamma << endl;
 }
 
 void Cubo::tecla1() {
-
     int k;
-    float larg, rx, ry, rz;
-
     k = mapa2[13];
-    cubinhos[k].rotX -= DR;
-    // cout << cubinhos[k].rotX << endl;
-
-    return;
+    cubinhos[k].rotTheta -= DR;
+    // cout << cubinhos[k].rotTheta << endl;
 }
 
 void Cubo::tecla2() {
@@ -445,340 +435,340 @@ void Cubo::rearranjaMapa(char c) {
     return;
 }
 
-void aumentaX(float &rx, float &ry, float &rz, float dr) {
+void rodaEixoX(float &rT, float &rP, float &rG, float dr) {
     int modX, modY, modZ;
 
-    modX = (360 + (int(rx) % 360)) % 360 / 90;
-    modY = (360 + (int(ry) % 360)) % 360 / 90;
-    modZ = (360 + (int(rz) % 360)) % 360 / 90;
+    modX = (360 + (int(rT) % 360)) % 360 / 90;
+    modY = (360 + (int(rP) % 360)) % 360 / 90;
+    modZ = (360 + (int(rG) % 360)) % 360 / 90;
 
     if (modX == 3 && modZ == 0) { // azul no eixo X
         // cout << "azul1\n";
-        ry += dr;
+        rP += dr;
     }
     else if (modX == 1 && modZ == 2) { // azul no eixo X
         // cout << "azul2\n";
-        ry -= dr;
+        rP -= dr;
     }
     else if (modX == 0 && modY == 0 && modZ == 3) { // azul no eixo X
         // cout << "azul3\n";
-        rx = -90;
-        ry += dr;
-        rz = 0;
+        rT = -90;
+        rP += dr;
+        rG = 0;
     }
     else if (modX == 2 && modY == 0 && modZ == 1) { // azul no eixo X
         // cout << "azul4\n";
-        rx = -90;
-        ry += dr;
-        rz = 0;
+        rT = -90;
+        rP += dr;
+        rG = 0;
     }
     else if (modX == 0 && modY == 2 && modZ == 1) { // azul no eixo X
         // cout << "azul5\n";
-        rx = -90;
-        ry += dr;
-        rz = 0;
+        rT = -90;
+        rP += dr;
+        rG = 0;
     }
     else if (modX == 2 && modY == 2 && modZ == 3) { // azul no eixo X
         // cout << "azul6\n";
-        rx = -90;
-        ry += dr;
-        rz = 0;
+        rT = -90;
+        rP += dr;
+        rG = 0;
     }
 
     else if (modX == 1 && modZ == 0) { // verde no eixo X
         // cout << "verde1\n";
-        ry -= dr;
+        rP -= dr;
     }
     else if (modX == 3 && modZ == 2) { // verde no eixo X
         // cout << "verde2\n";
-        ry += dr;
+        rP += dr;
     }
     else if (modX == 0 && modY == 0 && modZ == 1) { // verde no eixo X
         // cout << "verde3\n";
-        rx = 90;
-        ry -= dr;
-        rz = 0;
+        rT = 90;
+        rP -= dr;
+        rG = 0;
     }
     else if (modX == 2 && modY == 0 && modZ == 3) { // verde no eixo X
         // cout << "verde4\n";
-        rx = 90;
-        ry -= dr;
-        rz = 0;
+        rT = 90;
+        rP -= dr;
+        rG = 0;
     }
     else if (modX == 0 && modY == 2 && modZ == 3) { // verde no eixo X
         // cout << "verde5\n";
-        rx = 90;
-        ry -= dr;
-        rz = 0;
+        rT = 90;
+        rP -= dr;
+        rG = 0;
     }
     else if (modX == 2 && modY == 2 && modZ == 1) { // verde no eixo X
         // cout << "verde6\n";
-        rx = 90;
-        ry -= dr;
-        rz = 0;
+        rT = 90;
+        rP -= dr;
+        rG = 0;
     }
 
     else if (modX == 1 && modZ == 3) { // laranja no eixo X
         // cout << "laranja1\n";
-        ry -= dr;
+        rP -= dr;
     }
 
     else if (modX == 3 && modZ == 1) { // laranja no eixo X
         // cout << "laranja2\n";
-        ry += dr;
+        rP += dr;
     }
     else if (modX == 0 && modY == 0 && modZ == 0) {
         // cout << "laranja3\n";
-        rx = +90;
-        ry -= dr;
-        rz = -90;
+        rT = +90;
+        rP -= dr;
+        rG = -90;
     }
     else if (modX == 2 && modY == 0 && modZ == 2) {
         // cout << "laranja4\n";
-        rx = +90;
-        ry -= dr;
-        rz = -90;
+        rT = +90;
+        rP -= dr;
+        rG = -90;
     }
     else if (modX == 2 && modY == 2 && modZ == 0) {
         // cout << "laranja5\n";
-        rx = +90;
-        ry -= dr;
-        rz = -90;
+        rT = +90;
+        rP -= dr;
+        rG = -90;
     }
     else if (modX == 0 && modY == 2 && modZ == 2) {
         // cout << "laranja6\n";
-        rx = +90;
-        ry -= dr;
-        rz = -90;
+        rT = +90;
+        rP -= dr;
+        rG = -90;
     }
 
     else if (modX == 3 && modZ == 3) { // vermelho no eixo X
         // cout << "vermelho1\n";
-        ry += dr;
+        rP += dr;
     }
     else if (modX == 1 && modZ == 1) { // vermelho no eixo X
         // cout << "vermelho2\n";
-        ry -= dr;
+        rP -= dr;
     }
     else if (modX == 2 && modY == 0 && modZ == 0) { // vermelho no eixo X
         // cout << "vermelho3\n";
-        rx = -90;
-        ry += dr;
-        rz = -90;
+        rT = -90;
+        rP += dr;
+        rG = -90;
     }
     else if (modX == 0 && modY == 2 && modZ == 0) { // vermelho no eixo X
         // cout << "vermelho4\n";
-        rx = -90;
-        ry += dr;
-        rz = -90;
+        rT = -90;
+        rP += dr;
+        rG = -90;
     }
     else if (modX == 0 && modY == 0 && modZ == 2) { // vermelho no eixo X
         // cout << "vermelho5\n";
-        rx = -90;
-        ry += dr;
-        rz = -90;
+        rT = -90;
+        rP += dr;
+        rG = -90;
     }
     else if (modX == 2 && modY == 2 && modZ == 2) { // vermelho no eixo X
         // cout << "vermelho6\n";
-        rx = -90;
-        ry += dr;
-        rz = -90;
+        rT = -90;
+        rP += dr;
+        rG = -90;
     }
 
     else if (modX == 2 && modY == 3) { // amarelo no eixo X
         // cout << "amarelo1\n";
-        rz += dr;
+        rG += dr;
     }
     else if (modX == 0 && modY == 1) { // amarelo no eixo X
         // cout << "amarelo2\n";
-        rz += dr;
+        rG += dr;
     }
 
     else if (modX == 0 && modY == 3) { // branco no eixo X
         // cout << "branco1\n";
-        rz -= dr;
+        rG -= dr;
     }
     else if (modX == 2 && modY == 1) { // branco no eixo X
         // cout << "branco2\n";
-        rz -= dr;
+        rG -= dr;
     }
 
-    // cout << rx << " " << ry << " " << rz << endl;
+    // cout << rT << " " << rP << " " << rG << endl;
 }
 
-void aumentaY(float &rx, float &ry, float &rz, float dr) {
+void rodaEixoY(float &rT, float &rP, float &rG, float dr) {
     int modX, modY, modZ;
 
-    modX = (360 + (int(rx) % 360)) % 360 / 90;
-    modY = (360 + (int(ry) % 360)) % 360 / 90;
-    modZ = (360 + (int(rz) % 360)) % 360 / 90;
+    modX = (360 + (int(rT) % 360)) % 360 / 90;
+    modY = (360 + (int(rP) % 360)) % 360 / 90;
+    modZ = (360 + (int(rG) % 360)) % 360 / 90;
 
     if (modX == 0 && modZ == 0) { // azul no eixo Y
         // cout << "azul1\n";
-        ry -= dr;
+        rP -= dr;
     }
     else if (modX == 2 && modZ == 2) { // azul no eixo Y
         // cout << "azul2\n";
-        ry += dr;
+        rP += dr;
     }
     else if (modX == 3 && modY == 0 && modZ == 1) { // azul no eixo Y
         // cout << "azul3\n";
-        rx = 0;
-        ry -= dr;
-        rz = 0;
+        rT = 0;
+        rP -= dr;
+        rG = 0;
     }
     else if (modX == 1 && modY == 0 && modZ == 3) { // azul no eixo Y
         // cout << "azul4\n";
-        rx = 0;
-        ry -= dr;
-        rz = 0;
+        rT = 0;
+        rP -= dr;
+        rG = 0;
     }
     else if (modX == 1 && modY == 2 && modZ == 1) { // azul no eixo Y
         // cout << "azul5\n";
-        rx = 0;
-        ry -= dr;
-        rz = 0;
+        rT = 0;
+        rP -= dr;
+        rG = 0;
     }
     else if (modX == 3 && modY == 2 && modZ == 3) { // azul no eixo Y
         // cout << "azul6\n";
-        rx = 0;
-        ry -= dr;
-        rz = 0;
+        rT = 0;
+        rP -= dr;
+        rG = 0;
     }
 
     else if (modX == 2 && modZ == 0) { // verde no eixo Y
         // cout << "verde1\n";
-        ry += dr;
+        rP += dr;
     }
     else if (modX == 0 && modZ == 2) { // verde no eixo Y
         // cout << "verde2\n";
-        ry -= dr;
+        rP -= dr;
     }
     else if (modX == 3 && modY == 0 && modZ == 3) { // verde no eixo Y
         // cout << "verde3\n";
-        rx = 180;
-        ry += dr;
-        rz = 0;
+        rT = 180;
+        rP += dr;
+        rG = 0;
     }
     else if (modX == 1 && modY == 0 && modZ == 1) { // verde no eixo Y
         // cout << "verde4\n";
-        rx = 180;
-        ry += dr;
-        rz = 0;
+        rT = 180;
+        rP += dr;
+        rG = 0;
     }
     else if (modX == 3 && modY == 2 && modZ == 1) { // verde no eixo Y
         // cout << "verde5\n";
-        rx = 180;
-        ry += dr;
-        rz = 0;
+        rT = 180;
+        rP += dr;
+        rG = 0;
     }
     else if (modX == 1 && modY == 2 && modZ == 3) { // verde no eixo Y
         // cout << "verde6\n";
-        rx = 180;
-        ry += dr;
-        rz = 0;
+        rT = 180;
+        rP += dr;
+        rG = 0;
     }
 
     else if (modX == 0 && modZ == 1) { // laranja no eixo Y
         // cout << "laranja1\n";
-        ry -= dr;
+        rP -= dr;
     }
     else if (modX == 2 && modZ == 3) { // laranja no eixo Y
         // cout << "laranja2\n";
-        ry += dr;
+        rP += dr;
     }
     else if (modX == 1 && modY == 0 && modZ == 0) { // laranja no eixo Y
         // cout << "laranja3\n";
-        rx = 0;
-        ry -= dr;
-        rz = 90;
+        rT = 0;
+        rP -= dr;
+        rG = 90;
     }
     else if (modX == 3 && modY == 0 && modZ == 2) { // laranja no eixo Y
         // cout << "laranja4\n";
-        rx = 0;
-        ry -= dr;
-        rz = 90;
+        rT = 0;
+        rP -= dr;
+        rG = 90;
     }
     else if (modX == 3 && modY == 2 && modZ == 0) { // laranja no eixo Y
         // cout << "laranja5\n";
-        rx = 0;
-        ry -= dr;
-        rz = 90;
+        rT = 0;
+        rP -= dr;
+        rG = 90;
     }
     else if (modX == 1 && modY == 2 && modZ == 2) { // laranja no eixo Y
         // cout << "laranja6\n";
-        rx = 0;
-        ry -= dr;
-        rz = 90;
+        rT = 0;
+        rP -= dr;
+        rG = 90;
     }
 
     else if (modX == 2 && modZ == 1) { // vermelho no eixo Y
         // cout << "vermelho1\n";
-        ry += dr;
+        rP += dr;
     }
     else if (modX == 0 && modZ == 3) { // vermelho no eixo Y
         // cout << "vermelho2\n";
-        ry -= dr;
+        rP -= dr;
     }
     else if (modX == 3 && modY == 0 && modZ == 0) { // vermelho no eixo Y
         // cout << "vermelho3\n";
-        rx = 180;
-        ry += dr;
-        rz = 90;
+        rT = 180;
+        rP += dr;
+        rG = 90;
     }
     else if (modX == 1 && modY == 0 && modZ == 2) { // vermelho no eixo Y
         // cout << "vermelho4\n";
-        rx = 180;
-        ry += dr;
-        rz = 90;
+        rT = 180;
+        rP += dr;
+        rG = 90;
     }
     else if (modX == 3 && modY == 2 && modZ == 2) { // vermelho no eixo Y
         // cout << "vermelho5\n";
-        rx = 180;
-        ry += dr;
-        rz = 90;
+        rT = 180;
+        rP += dr;
+        rG = 90;
     }
     else if (modX == 1 && modY == 2 && modZ == 0) { // vermelho no eixo Y
         // cout << "vermelho6\n";
-        rx = 180;
-        ry += dr;
-        rz = 90;
+        rT = 180;
+        rP += dr;
+        rG = 90;
     }
 
     else if (modX == 1 && modY == 1) { // amarelo no eixo Y
         // cout << "amarelo1\n";
-        rz -= dr;
+        rG -= dr;
     }
     else if (modX == 3 && modY == 3) { // amarelo no eixo Y
         // cout << "amarelo2\n";
-        rz -= dr;
+        rG -= dr;
     }
 
     else if (modX == 3 && modY == 1) { // branco no eixo Y
         // cout << "branco1\n";
-        rz += dr;
+        rG += dr;
     }
     else if (modX == 1 && modY == 3) { // branco no eixo Y
         // cout << "branco2\n";
-        rz += dr;
+        rG += dr;
     }
 
-    // cout << rx << " " << ry << " " << rz << endl;
+    // cout << rT << " " << rP << " " << rG << endl;
 }
 
-void aumentaZ(float &rx, float &ry, float &rz, float dr) {
+void rodaEixoZ(float &rT, float &rP, float &rG, float dr) {
     int modX, modY, modZ;
 
-    modX = (360 + (int(rx) % 360)) % 360 / 90;
-    modY = (360 + (int(ry) % 360)) % 360 / 90;
-    modZ = (360 + (int(rz) % 360)) % 360 / 90;
-    rx += dr;
+    modX = (360 + (int(rT) % 360)) % 360 / 90;
+    modY = (360 + (int(rP) % 360)) % 360 / 90;
+    modZ = (360 + (int(rG) % 360)) % 360 / 90;
+    rT += dr;
 
-    // cout << rx << " " << ry << " " << rz << endl;
+    // cout << rT << " " << rP << " " << rG << endl;
 }
 
 void Cubo::teclaPonto() {
-    aumentaY(cubinhos[13].rotX, cubinhos[13].rotY, cubinhos[13].rotZ, DR);
+    rodaEixoY(cubinhos[13].rotTheta, cubinhos[13].rotPhi, cubinhos[13].rotGamma, DR);
 }
 
 void Cubo::tecla6() {
@@ -874,11 +864,11 @@ void Cubo::tecla6() {
     for (int i = 0; i < 9; i++) {
         k = i; // lado branco
         k = mapa2[k];
-        aumentaZ(cubinhos[k].rotX, cubinhos[k].rotY, cubinhos[k].rotZ, +DR);
+        rodaEixoZ(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, +DR);
 
         k = i + 18; // lado amarelo
         k = mapa2[k];
-        aumentaZ(cubinhos[k].rotX, cubinhos[k].rotY, cubinhos[k].rotZ, -DR);
+        rodaEixoZ(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, -DR);
     }
 
     k = mapa2[0];
@@ -988,11 +978,11 @@ void Cubo::tecla7() {
     for (int i = 0; i < 9; i++) {
         k = i * 3 + 2; // lado azul
         k = mapa2[k];
-        aumentaY(cubinhos[k].rotX, cubinhos[k].rotY, cubinhos[k].rotZ, +DR);
+        rodaEixoY(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, +DR);
 
         k = i * 3; // lado verde
         k = mapa2[k];
-        aumentaY(cubinhos[k].rotX, cubinhos[k].rotY, cubinhos[k].rotZ, -DR);
+        rodaEixoY(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, -DR);
     }
 
     k = mapa2[0];
@@ -1103,11 +1093,11 @@ void Cubo::tecla8() {
     for (int i = 0; i < 9; i++) {
         k = (i / 3) * 9 + (i % 3) + 6; // lado laranja
         k = mapa2[k];
-        aumentaX(cubinhos[k].rotX, cubinhos[k].rotY, cubinhos[k].rotZ, -DR);
+        rodaEixoX(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, -DR);
 
         k = (i / 3) * 9 + (i % 3); // lado vermelho
         k = mapa2[k];
-        aumentaX(cubinhos[k].rotX, cubinhos[k].rotY, cubinhos[k].rotZ, +DR);
+        rodaEixoX(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, +DR);
     }
 
     k = mapa2[0];
@@ -1225,12 +1215,12 @@ void Cubo::ladoXHorario(float dr, char cor) {
         if (cor == 'o') {
             k = (i / 3) * 9 + (i % 3) + 6; // lado laranja
             k = mapa2[k];
-            aumentaX(cubinhos[k].rotX, cubinhos[k].rotY, cubinhos[k].rotZ, -dr);
+            rodaEixoX(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, -dr);
         }
         else if (cor == 'r') {
             k = (i / 3) * 9 + (i % 3); // lado vermelho
             k = mapa2[k];
-            aumentaX(cubinhos[k].rotX, cubinhos[k].rotY, cubinhos[k].rotZ, +dr);
+            rodaEixoX(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, +dr);
         }
     }
 
@@ -1337,12 +1327,12 @@ void Cubo::ladoYHorario(float dr, char cor) {
         if (cor == 'b') {
             k = i * 3 + 2; // lado azul
             k = mapa2[k];
-            aumentaY(cubinhos[k].rotX, cubinhos[k].rotY, cubinhos[k].rotZ, +dr);
+            rodaEixoY(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, +dr);
         }
         else if (cor == 'g') {
             k = i * 3; // lado verde
             k = mapa2[k];
-            aumentaY(cubinhos[k].rotX, cubinhos[k].rotY, cubinhos[k].rotZ, -dr);
+            rodaEixoY(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, -dr);
         }
     }
 
@@ -1449,12 +1439,12 @@ void Cubo::ladoZHorario(float dr, char cor) {
         if (cor == 'y') {
             k = i + 18; // lado amarelo
             k = mapa2[k];
-            aumentaZ(cubinhos[k].rotX, cubinhos[k].rotY, cubinhos[k].rotZ, -dr);
+            rodaEixoZ(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, -dr);
         }
         else if (cor == 'w') {
             k = i; // lado branco
             k = mapa2[k];
-            aumentaZ(cubinhos[k].rotX, cubinhos[k].rotY, cubinhos[k].rotZ, +dr);
+            rodaEixoZ(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, +dr);
         }
     }
 

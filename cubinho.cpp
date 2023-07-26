@@ -93,9 +93,9 @@ void Cubinho::displayCubinho() {
     glPushMatrix();
 
     glTranslatef(cx, cy, cz);
-    glRotatef(rotX, 0, 0, 1);
-    glRotatef(rotY, 0, 1, 0);
-    glRotatef(rotZ, 0, 0, 1);
+    glRotatef(rotTheta, 0, 0, 1);
+    glRotatef(rotPhi, 0, 1, 0);
+    glRotatef(rotGamma, 0, 0, 1);
 
     displayContornoCubinho(pts);
 
