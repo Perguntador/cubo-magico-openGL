@@ -4,7 +4,7 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-#define DR 5 // divisor de 90 que não seja divisor de 45
+#define DR 9 // divisor de 90
 #define DELAY 10
 
 #define MAX_CUBOS 10
@@ -27,6 +27,9 @@ eixo z: sentido do amarelo
 */
 
 Cubo::Cubo(float _cx, float _cy, float _cz, float _largAresta) : id_(proxId_++) {
+    int k;
+    float larg, rx, ry, rz;
+
     pCubos[id_] = this;
     cx = _cx;
     cy = _cy;
@@ -48,13 +51,8 @@ Cubo::Cubo(float _cx, float _cy, float _cz, float _largAresta) : id_(proxId_++) 
         rotsZ[i] = 0;
     }
 
-    int k;
-    float larg, rx, ry, rz;
-
     for (int i = 0; i < 27; i++) {
-
-        k = i;
-        k = mapa2[k];
+        k = mapa2[i];
 
         if (i == 17) {
             larg = largAresta;
@@ -282,9 +280,9 @@ void Cubo::tecla5() {
     for (int i = 0; i < 9; i++) {
         // k = (i/3)*9+(i%3)+6; // lado laranja
         // k = (i/3)*9+(i%3); // lado vermelho
-        // k = i*3+2; // lado azul
-        // k = i*3; // lado verde
-        k = i; // lado branco
+        k = i * 3 + 2; // lado verde
+        // k = i*3; // lado azul
+        // k = i; // lado branco
         // k = i+18; // lado amarelo
         k = mapa2[k];
         mapa[k] = !mapa[k];
@@ -386,44 +384,44 @@ void Cubo::rearranjaMapa(char c) {
         }
     }
 
-    else if (c == 'B') {
-        for (int i = 0; i < 9; i++) {
-            iAux = v1[i] * 3 + 2; // lado azul
-            vAux[i] = mapa2[iAux];
-        }
-        for (int i = 0; i < 9; i++) {
-            iAux = i * 3 + 2; // lado azul
-            mapa2[iAux] = vAux[i];
-        }
-    }
-    else if (c == 'b') {
-        for (int i = 0; i < 9; i++) {
-            iAux = v2[i] * 3 + 2; // lado azul
-            vAux[i] = mapa2[iAux];
-        }
-        for (int i = 0; i < 9; i++) {
-            iAux = i * 3 + 2; // lado azul
-            mapa2[iAux] = vAux[i];
-        }
-    }
-
     else if (c == 'G') {
         for (int i = 0; i < 9; i++) {
-            iAux = v2[i] * 3; // lado verde
+            iAux = v1[i] * 3 + 2; // lado verde
             vAux[i] = mapa2[iAux];
         }
         for (int i = 0; i < 9; i++) {
-            iAux = i * 3; // lado verde
+            iAux = i * 3 + 2; // lado verde
             mapa2[iAux] = vAux[i];
         }
     }
     else if (c == 'g') {
         for (int i = 0; i < 9; i++) {
-            iAux = v1[i] * 3; // lado verde
+            iAux = v2[i] * 3 + 2; // lado verde
             vAux[i] = mapa2[iAux];
         }
         for (int i = 0; i < 9; i++) {
-            iAux = i * 3; // lado verde
+            iAux = i * 3 + 2; // lado verde
+            mapa2[iAux] = vAux[i];
+        }
+    }
+
+    else if (c == 'B') {
+        for (int i = 0; i < 9; i++) {
+            iAux = v2[i] * 3; // lado azul
+            vAux[i] = mapa2[iAux];
+        }
+        for (int i = 0; i < 9; i++) {
+            iAux = i * 3; // lado azul
+            mapa2[iAux] = vAux[i];
+        }
+    }
+    else if (c == 'b') {
+        for (int i = 0; i < 9; i++) {
+            iAux = v1[i] * 3; // lado azul
+            vAux[i] = mapa2[iAux];
+        }
+        for (int i = 0; i < 9; i++) {
+            iAux = i * 3; // lado azul
             mapa2[iAux] = vAux[i];
         }
     }
@@ -772,12 +770,9 @@ void Cubo::teclaPonto() {
 }
 
 void Cubo::tecla6() {
+    float larg, rx, ry, rz;
+    int k, modX, modY, modZ;
 
-    float larg;
-    float rx, ry, rz;
-
-    int k;
-    int modX, modY, modZ;
     int mods;
 
     for (int i = 0; i < 27; i++) {
@@ -813,19 +808,19 @@ void Cubo::tecla6() {
         else if (k == 0 || k == 2 || k == 6 || k == 8 || k == 18 || k == 20 || k == 24 || k == 26) {
             larg = sqrt(2) * largAresta;
 
-            if (modZ == 1 && (modX + modY) % 4 == 0) {
+            if (modZ == 1 && (modX + modY) % 4 < 2) {
                 rotsX[k] += DR;
                 rotsY[k] -= DR;
             }
-            else if (modZ == 1 && (modX + modY) % 4 == 2) {
+            else if (modZ == 1 && (modX + modY) % 4 >= 2) {
                 rotsX[k] -= DR;
                 rotsY[k] += DR;
             }
-            else if (modZ == 3 && (modX + modY) % 4 == 0) {
+            else if (modZ == 3 && (modX + modY) % 4 < 2) {
                 rotsX[k] -= DR;
                 rotsY[k] += DR;
             }
-            else if (modZ == 3 && (modX + modY) % 4 == 2) {
+            else if (modZ == 3 && (modX + modY) % 4 >= 2) {
                 rotsX[k] += DR;
                 rotsY[k] -= DR;
             }
@@ -886,10 +881,10 @@ void Cubo::tecla6() {
 }
 
 void Cubo::tecla7() {
-    int k;
     float larg, rx, ry, rz;
+    int k, modX, modY, modZ;
+
     int mods;
-    int modX, modY, modZ;
 
     for (int i = 0; i < 27; i++) {
         k = i;
@@ -928,19 +923,19 @@ void Cubo::tecla7() {
             modY = (360 + (int(rotsY[k]) % 360)) % 360 / 90;
             modZ = (360 + (int(rotsZ[k]) % 360)) % 360 / 90;
 
-            if (modY == 1 && (modX + modZ) % 4 == 0) {
+            if (modY == 1 && (modX + modZ) % 4 < 2) {
                 rotsX[k] -= DR;
                 rotsZ[k] += DR;
             }
-            else if (modY == 1 && (modX + modZ) % 4 == 2) {
+            else if (modY == 1 && (modX + modZ) % 4 >= 2) {
                 rotsX[k] += DR;
                 rotsZ[k] -= DR;
             }
-            else if (modY == 3 && (modX + modZ) % 4 == 0) {
+            else if (modY == 3 && (modX + modZ) % 4 < 2) {
                 rotsX[k] += DR;
                 rotsZ[k] -= DR;
             }
-            else if (modY == 3 && (modX + modZ) % 4 == 2) {
+            else if (modY == 3 && (modX + modZ) % 4 >= 2) {
                 rotsX[k] -= DR;
                 rotsZ[k] += DR;
             }
@@ -976,11 +971,11 @@ void Cubo::tecla7() {
     }
 
     for (int i = 0; i < 9; i++) {
-        k = i * 3 + 2; // lado azul
+        k = i * 3 + 2; // lado verde
         k = mapa2[k];
         rodaEixoY(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, +DR);
 
-        k = i * 3; // lado verde
+        k = i * 3; // lado azul
         k = mapa2[k];
         rodaEixoY(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, -DR);
     }
@@ -1000,10 +995,10 @@ void Cubo::tecla7() {
 }
 
 void Cubo::tecla8() {
-    int k;
     float larg, rx, ry, rz;
+    int k, modX, modY, modZ;
+
     int mods;
-    int modX, modY, modZ;
 
     for (int i = 0; i < 27; i++) {
         k = i;
@@ -1042,36 +1037,36 @@ void Cubo::tecla8() {
             modY = (360 + (int(rotsY[k]) % 360)) % 360 / 90;
             modZ = (360 + (int(rotsZ[k]) % 360)) % 360 / 90;
 
-            if (modX == 1 && (modY + modZ) % 4 == 0) {
+            if (modX == 1 && (modY + modZ) % 4 < 2) {
                 rotsY[k] += DR;
                 rotsZ[k] -= DR;
             }
-            else if (modX == 1 && (modY + modZ) % 4 == 2) {
+            else if (modX == 1 && (modY + modZ) % 4 >= 2) {
                 rotsY[k] -= DR;
                 rotsZ[k] += DR;
             }
-            else if (modX == 3 && (modY + modZ) % 4 == 0) {
+            else if (modX == 3 && (modY + modZ) % 4 < 2) {
                 rotsY[k] -= DR;
                 rotsZ[k] += DR;
             }
-            else if (modX == 3 && (modY + modZ) % 4 == 2) {
+            else if (modX == 3 && (modY + modZ) % 4 >= 2) {
                 rotsY[k] += DR;
                 rotsZ[k] -= DR;
             }
 
-            else if (modX == 0 && (4 + modY - modZ) % 4 == 1) {
+            else if (modX == 0 && (4 + modY - modZ) % 4 < 2) {
                 rotsY[k] -= DR;
                 rotsZ[k] -= DR;
             }
-            else if (modX == 0 && (4 + modY - modZ) % 4 == 3) {
+            else if (modX == 0 && (4 + modY - modZ) % 4 >= 2) {
                 rotsY[k] += DR;
                 rotsZ[k] += DR;
             }
-            else if (modX == 2 && (4 + modY - modZ) % 4 == 1) {
+            else if (modX == 2 && (4 + modY - modZ) % 4 < 2) {
                 rotsY[k] += DR;
                 rotsZ[k] += DR;
             }
-            else if (modX == 2 && (4 + modY - modZ) % 4 == 3) {
+            else if (modX == 2 && (4 + modY - modZ) % 4 >= 2) {
                 rotsY[k] -= DR;
                 rotsZ[k] -= DR;
             }
@@ -1115,10 +1110,8 @@ void Cubo::tecla8() {
 }
 
 void Cubo::ladoXHorario(float dr, char cor) {
-    int k;
     float larg, rx, ry, rz;
-    int mods;
-    int modX, modY, modZ;
+    int k, modX, modY, modZ;
 
     for (int i = 0; i < 9; i++) {
         if (cor == 'o') {
@@ -1163,19 +1156,19 @@ void Cubo::ladoXHorario(float dr, char cor) {
             modY = (360 + (int(rotsY[k]) % 360)) % 360 / 90;
             modZ = (360 + (int(rotsZ[k]) % 360)) % 360 / 90;
 
-            if (modX == 1 && (modY + modZ) % 4 == 0) {
+            if (modX == 1 && (modY + modZ) % 4 < 2) {
                 rotsY[k] += dr;
                 rotsZ[k] -= dr;
             }
-            else if (modX == 1 && (modY + modZ) % 4 == 2) {
+            else if (modX == 1 && (modY + modZ) % 4 >= 2) {
                 rotsY[k] -= dr;
                 rotsZ[k] += dr;
             }
-            else if (modX == 3 && (modY + modZ) % 4 == 0) {
+            else if (modX == 3 && (modY + modZ) % 4 < 2) {
                 rotsY[k] -= dr;
                 rotsZ[k] += dr;
             }
-            else if (modX == 3 && (modY + modZ) % 4 == 2) {
+            else if (modX == 3 && (modY + modZ) % 4 >= 2) {
                 rotsY[k] += dr;
                 rotsZ[k] -= dr;
             }
@@ -1228,17 +1221,15 @@ void Cubo::ladoXHorario(float dr, char cor) {
 }
 
 void Cubo::ladoYHorario(float dr, char cor) {
-    int k;
     float larg, rx, ry, rz;
-    int mods;
-    int modX, modY, modZ;
+    int k, modX, modY, modZ;
 
     for (int i = 0; i < 9; i++) {
         if (cor == 'b') {
-            k = i * 3 + 2; // lado azul
+            k = i * 3; // lado azul
         }
         else if (cor == 'g') {
-            k = i * 3; // lado verde
+            k = i * 3 + 2; // lado verde
         }
 
         k = mapa2[k];
@@ -1276,19 +1267,19 @@ void Cubo::ladoYHorario(float dr, char cor) {
             modY = (360 + (int(rotsY[k]) % 360)) % 360 / 90;
             modZ = (360 + (int(rotsZ[k]) % 360)) % 360 / 90;
 
-            if (modY == 1 && (modX + modZ) % 4 == 0) {
+            if (modY == 1 && (modX + modZ) % 4 < 2) {
                 rotsX[k] -= dr;
                 rotsZ[k] += dr;
             }
-            else if (modY == 1 && (modX + modZ) % 4 == 2) {
+            else if (modY == 1 && (modX + modZ) % 4 >= 2) {
                 rotsX[k] += dr;
                 rotsZ[k] -= dr;
             }
-            else if (modY == 3 && (modX + modZ) % 4 == 0) {
+            else if (modY == 3 && (modX + modZ) % 4 < 2) {
                 rotsX[k] += dr;
                 rotsZ[k] -= dr;
             }
-            else if (modY == 3 && (modX + modZ) % 4 == 2) {
+            else if (modY == 3 && (modX + modZ) % 4 >= 2) {
                 rotsX[k] -= dr;
                 rotsZ[k] += dr;
             }
@@ -1324,13 +1315,13 @@ void Cubo::ladoYHorario(float dr, char cor) {
     }
 
     for (int i = 0; i < 9; i++) {
-        if (cor == 'b') {
-            k = i * 3 + 2; // lado azul
+        if (cor == 'g') {
+            k = i * 3 + 2; // lado verde
             k = mapa2[k];
             rodaEixoY(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, +dr);
         }
-        else if (cor == 'g') {
-            k = i * 3; // lado verde
+        else if (cor == 'b') {
+            k = i * 3; // lado azul
             k = mapa2[k];
             rodaEixoY(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, -dr);
         }
@@ -1340,12 +1331,8 @@ void Cubo::ladoYHorario(float dr, char cor) {
 }
 
 void Cubo::ladoZHorario(float dr, char cor) {
-    float larg;
-    float rx, ry, rz;
-
-    int k;
-    int modX, modY, modZ;
-    int mods;
+    float larg, rx, ry, rz;
+    int k, modX, modY, modZ;
 
     for (int i = 0; i < 9; i++) {
         if (cor == 'y') {
@@ -1384,22 +1371,21 @@ void Cubo::ladoZHorario(float dr, char cor) {
         }
 
         else if (k == 0 || k == 2 || k == 6 || k == 8 || k == 18 || k == 20 || k == 24 || k == 26) {
-
             larg = sqrt(2) * largAresta;
 
-            if (modZ == 1 && (modX + modY) % 4 == 0) {
+            if (modZ == 1 && (modX + modY) % 4 < 2) {
                 rotsX[k] += dr;
                 rotsY[k] -= dr;
             }
-            else if (modZ == 1 && (modX + modY) % 4 == 2) {
+            else if (modZ == 1 && (modX + modY) % 4 >= 2) {
                 rotsX[k] -= dr;
                 rotsY[k] += dr;
             }
-            else if (modZ == 3 && (modX + modY) % 4 == 0) {
+            else if (modZ == 3 && (modX + modY) % 4 < 2) {
                 rotsX[k] -= dr;
                 rotsY[k] += dr;
             }
-            else if (modZ == 3 && (modX + modY) % 4 == 2) {
+            else if (modZ == 3 && (modX + modY) % 4 >= 2) {
                 rotsX[k] += dr;
                 rotsY[k] -= dr;
             }

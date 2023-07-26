@@ -67,5 +67,7 @@ class Cubo {
     friend void giraAmareloAntiHorario(int id);
     friend void giraBrancoAntiHorario(int id);
 
+    bool espera() { return flagRot; }
+
     void printId();
 };

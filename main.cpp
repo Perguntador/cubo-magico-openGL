@@ -1,27 +1,32 @@
 #include "cubo.h"
 #include <GL/glut.h>
+#include <cstdlib> // time, srand, rand
 #include <iostream>
 
-Cubo cubo1(0, 0, 0, 1);
+Cubo cubo1(0, -8, 0, 0.8);
 Cubo cubo2;
-Cubo cubo3(1.7, 3.2, 2, 2.7);
+Cubo cubo3(0, 8, 0, 1.2);
 
-float dOrtho = 5;
 float angTheta = 135;
 float angPhi = 45;
 float angGamma = 90;
 float s = 1;
 
 bool mov = false;
+bool stop = true;
 int xb, yb;
 
 using namespace std;
+
+float dOrthox = 10;
+float dOrthoy = 5;
+float dOrthoz = 10;
 
 void config() {
     glEnable(GL_DEPTH_TEST);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(-dOrtho, dOrtho, -dOrtho, dOrtho, -dOrtho, dOrtho);
+    glOrtho(-dOrthox, dOrthox, -dOrthoy, dOrthoy, -dOrthoz, dOrthoz);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -35,7 +40,9 @@ void display() {
     glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    cubo1.displayCubo();
     cubo2.displayCubo();
+    cubo3.displayCubo();
 
     glutSwapBuffers();
 }
@@ -156,6 +163,11 @@ void teclado(unsigned char key, int x, int y) {
         cubo2.laranjaAntiHorario();
         break;
 
+    case 'p':
+    case 'P':
+        stop = !stop;
+        break;
+
     case '+':
         s *= 1.1;
         config();
@@ -177,17 +189,35 @@ void teclado(unsigned char key, int x, int y) {
     }
 }
 
+void executa() {
+    if (!stop && !cubo2.espera()) {
+        char movs[] = {'y', 'Y', 'w', 'W', 'b', 'B', 'g', 'G', 'o', 'O', 'r', 'R'};
+        int i = rand() % 12;
+        teclado(movs[i], 0, 0);
+    }
+}
+
+void reshape(int x, int y) {
+    dOrthox = float(x) / float(y) * dOrthoy;
+
+    glViewport(0, 0, x, y);
+    config();
+}
+
 int main(int argc, char **argv) {
+    srand(time(NULL));
+
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-    glutInitWindowSize(400, 400);
+    glutInitWindowSize(800, 400);
     glutCreateWindow("Cubo Magico 3D (JAS)");
     config();
     glutDisplayFunc(display);
     glutKeyboardFunc(teclado);
-    // glutIdleFunc(executa);
+    glutIdleFunc(executa);
     glutMouseFunc(botao);
     glutMotionFunc(botao_mov);
+    glutReshapeFunc(reshape);
 
     glutMainLoop();
 
