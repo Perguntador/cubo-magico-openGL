@@ -1,6 +1,7 @@
 #include "cubo.h"
 #include <GL/glut.h>
-#include <cstdlib> // time, srand, rand
+#include <cstdlib> // srand, rand
+#include <ctime>   // time
 #include <iostream>
 
 Cubo cubo1(0, -8, 0, 0.8);

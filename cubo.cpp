@@ -1,8 +1,8 @@
 #include "cubo.h"
-#include <GL/glut.h>
-#include <iostream>
 #define _USE_MATH_DEFINES
 #include <cmath>
+#include <GL/glut.h>
+#include <iostream>
 
 #define DR 9 // divisor de 90
 #define DELAY 10
@@ -1116,12 +1116,14 @@ void Cubo::ladoXHorario(float dr, char cor) {
     for (int i = 0; i < 9; i++) {
         if (cor == 'o') {
             k = (i / 3) * 9 + (i % 3) + 6; // lado laranja
+            k = mapa2[k];
+            rodaEixoX(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, -dr);
         }
         else if (cor == 'r') {
             k = (i / 3) * 9 + (i % 3); // lado vermelho
+            k = mapa2[k];
+            rodaEixoX(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, +dr);
         }
-
-        k = mapa2[k];
 
         if (k == 1 || k == 3 || k == 5 || k == 7 || k == 19 || k == 21 || k == 23 || k == 25 ||
             k == 9 || k == 11 || k == 15 || k == 17) {
@@ -1204,19 +1206,6 @@ void Cubo::ladoXHorario(float dr, char cor) {
         cubinhos[k].cz = cos(rz) * larg + cz;
     }
 
-    for (int i = 0; i < 9; i++) {
-        if (cor == 'o') {
-            k = (i / 3) * 9 + (i % 3) + 6; // lado laranja
-            k = mapa2[k];
-            rodaEixoX(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, -dr);
-        }
-        else if (cor == 'r') {
-            k = (i / 3) * 9 + (i % 3); // lado vermelho
-            k = mapa2[k];
-            rodaEixoX(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, +dr);
-        }
-    }
-
     return;
 }
 
@@ -1227,12 +1216,14 @@ void Cubo::ladoYHorario(float dr, char cor) {
     for (int i = 0; i < 9; i++) {
         if (cor == 'b') {
             k = i * 3; // lado azul
+            k = mapa2[k];
+            rodaEixoY(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, -dr);
         }
         else if (cor == 'g') {
             k = i * 3 + 2; // lado verde
+            k = mapa2[k];
+            rodaEixoY(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, +dr);
         }
-
-        k = mapa2[k];
 
         if (k == 1 || k == 3 || k == 5 || k == 7 || k == 19 || k == 21 || k == 23 || k == 25 ||
             k == 9 || k == 11 || k == 15 || k == 17) {
@@ -1314,19 +1305,6 @@ void Cubo::ladoYHorario(float dr, char cor) {
         cubinhos[k].cz = cos(rz) * larg + cz;
     }
 
-    for (int i = 0; i < 9; i++) {
-        if (cor == 'g') {
-            k = i * 3 + 2; // lado verde
-            k = mapa2[k];
-            rodaEixoY(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, +dr);
-        }
-        else if (cor == 'b') {
-            k = i * 3; // lado azul
-            k = mapa2[k];
-            rodaEixoY(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, -dr);
-        }
-    }
-
     return;
 }
 
@@ -1337,12 +1315,14 @@ void Cubo::ladoZHorario(float dr, char cor) {
     for (int i = 0; i < 9; i++) {
         if (cor == 'y') {
             k = i + 18; // lado amarelo
+            k = mapa2[k];
+            rodaEixoZ(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, -dr);
         }
         else if (cor == 'w') {
             k = i; // lado branco
+            k = mapa2[k];
+            rodaEixoZ(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, +dr);
         }
-
-        k = mapa2[k];
 
         modX = (360 + (int(rotsX[k]) % 360)) % 360 / 90;
         modY = (360 + (int(rotsY[k]) % 360)) % 360 / 90;
@@ -1419,19 +1399,6 @@ void Cubo::ladoZHorario(float dr, char cor) {
         cubinhos[k].cx = cos(rx) * larg + cx;
         cubinhos[k].cy = cos(ry) * larg + cy;
         cubinhos[k].cz = cos(rz) * larg + cz;
-    }
-
-    for (int i = 0; i < 9; i++) {
-        if (cor == 'y') {
-            k = i + 18; // lado amarelo
-            k = mapa2[k];
-            rodaEixoZ(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, -dr);
-        }
-        else if (cor == 'w') {
-            k = i; // lado branco
-            k = mapa2[k];
-            rodaEixoZ(cubinhos[k].rotTheta, cubinhos[k].rotPhi, cubinhos[k].rotGamma, +dr);
-        }
     }
 
     return;
