@@ -1,9 +1,10 @@
 #include "cubo.h"
 #define _USE_MATH_DEFINES
-#include <cmath>
 #include <GL/glut.h>
-#include <iostream>
+#include <cmath>
 #include <fstream>
+#include <iostream>
+#include <string>
 
 #define DR 9 // divisor de 90
 #define DELAY 10
