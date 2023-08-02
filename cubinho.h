@@ -32,5 +32,13 @@ class Cubinho {
     void setGamma(float _rotGamma) { rotGamma = _rotGamma; }
 
     void displayCubinho();
+
+    char corX();
+    char corY();
+    char corZ();
+    char corXn();
+    char corYn();
+    char corZn();
+
     friend class Cubo;
 };

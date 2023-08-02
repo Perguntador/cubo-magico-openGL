@@ -1,5 +1,5 @@
 eixo x: sentido do laranja
-eixo y: sentido do azul
+eixo y: sentido do verde
 eixo z: sentido do amarelo
 
 // k = (i/3)*9+(i%3)+6; // lado laranja
@@ -11,7 +11,7 @@ eixo z: sentido do amarelo
 
 // lado branco (0,1,2,3,4,5,6,7,8)
 // lado amarelo (18,19,20,21,22,23,24,25,26)
-// lado verde (0,3,6,9,12,15,18,21,24)){
+// lado verde (0,3,6,9,12,15,18,21,24)
 // lado azul (2,5,8,11,14,17,20,23,26)
 // lado vermelho (0,1,2,9,10,11,18,19,20)
 // lado laranja (6,7,8,15,16,17,24,25,26)
@@ -268,3 +268,168 @@ branco
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+eixo -Z
+x0z w
+x2z y
+
+x10 o
+x11 b
+x12 r
+x13 g
+
+x30 r
+x31 g
+x32 o
+x33 b
+
+eixo +X
+x0z (x+z)%4==0 o
+x0z (x+z)%4==1 b
+x0z (x+z)%4==2 r
+x0z (x+z)%4==3 g
+
+x2z (4+x-z)%4==0 r
+x2z (4+x-z)%4==1 b
+x2z (4+x-z)%4==2 o
+x2z (4+x-z)%4==3 g
+
+020 r
+120 b
+220 o
+320 g
+
+020 r
+021 g
+022 o
+023 b
+
+121 r
+022 o
+221 b
+
+
+
+01z y
+21z w
+
+03z w
+23z y
+
+xyz x%2!=0 y%2!= 0 (x+z)%4==0 o
+xyz x%2!=0 y%2!= 0 (x+z)%4==1 b
+xyz x%2!=0 y%2!= 0 (x+z)%4==2 r
+xyz x%2!=0 y%2!= 0 (x+z)%4==3 g
+
+310 g
+311 o
+312 b
+313 r
+
+110 b
+111 r
+112 g
+113 o
+
+
+
+330 g
+331 o
+332 b
+333 r
+
+130 b
+131 r
+132 g
+133 o
+
+1y3 o
+
+
+eixo +Y
+000 g
+100 o
+200 b
+300 r
+
+100 o
+110 y
+120 r
+130 w
+
+100 o
+101 b
+102 r
+103 g
+
+
+
+
+0y0 g
+2y0 b
+2y2 g
+0y2 b
+
+2y1 r
+0y1 o
+0y3 r
+2y3 o
+
+33z y
+13z w
+11z y
+31z w
+
+120 r
+121 g
+122 o
+123 b
+
+100 o
+101 b
+102 r
+103 g
+
+300 r
+301 g
+302 o
+303 b
+
+320 o
+321 b
+322 r
+323 g
+
+(x-1+y+z)%4==0 o
+122 o
+100 o
+302 o
+320 o
+
+(x-1+y+z)%4==1 b
+123 b
+101 b
+303 b
+321 b
+
+(x-1+y+z)%4==2 r
+120 r
+102 r
+300 r
+322 r
+
+(x-1+y+z)%4==3 g
+121 g
+103 g
+301 g
+323 g

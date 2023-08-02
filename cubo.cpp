@@ -3,6 +3,7 @@
 #include <cmath>
 #include <GL/glut.h>
 #include <iostream>
+#include <fstream>
 
 #define DR 9 // divisor de 90
 #define DELAY 10
@@ -22,9 +23,189 @@ float grau2rad(float grau) {
 
 /*
 eixo x: sentido do laranja
-eixo y: sentido do azul
+eixo y: sentido do verde
 eixo z: sentido do amarelo
 */
+
+void Cubo::salvar() {
+    int k;
+    int vAux1[] = {6, 7, 8, 3, 4, 5, 0, 1, 2};
+    int vAux2[] = {8, 7, 6, 5, 4, 3, 2, 1, 0};
+    string s;
+    ofstream arq;
+
+    for (int i = 0; i < 9; i++) {
+        k = i + 18; // lado amarelo
+        k = mapa2[k];
+        s += cubinhos[k].corZ();
+        if (i % 3 == 2) {
+            s += '\n';
+        }
+    }
+    for (int i = 0; i < 9; i++) {
+        k = vAux1[i];
+        k = (k / 3) * 9 + (k % 3) + 6; // lado laranja
+        k = mapa2[k];
+        s += cubinhos[k].corX();
+        if (i % 3 == 2) {
+            s += '\n';
+        }
+    }
+    for (int i = 0; i < 9; i++) {
+        k = vAux2[i];
+        k = k * 3 + 2; // lado verde
+        k = mapa2[k];
+        s += cubinhos[k].corY();
+        if (i % 3 == 2) {
+            s += '\n';
+        }
+    }
+    for (int i = 0; i < 9; i++) {
+        k = vAux2[i];
+        k = (k / 3) * 9 + (k % 3); // lado vermelho
+        k = mapa2[k];
+        s += cubinhos[k].corXn();
+        if (i % 3 == 2) {
+            s += '\n';
+        }
+    }
+    for (int i = 0; i < 9; i++) {
+        k = vAux1[i];
+        k = k * 3; // lado azul
+        k = mapa2[k];
+        s += cubinhos[k].corYn();
+        if (i % 3 == 2) {
+            s += '\n';
+        }
+    }
+    for (int i = 0; i < 9; i++) {
+        k = i; // lado branco
+        k = mapa2[k];
+        s += cubinhos[k].corZn();
+        if (i % 3 == 2) {
+            s += '\n';
+        }
+    }
+    s.pop_back();
+
+    arq.open("cubo.txt");
+    if (!arq) {
+        cout << "Erro ao abrir arquivo\n";
+        return;
+    }
+    arq << s;
+    arq.close();
+}
+
+void Cubo::carregar() {
+    bool b;
+    bool flagY, flagW, flagO, flagR, flagG, flagB;
+    char cores[6];
+    int k;
+    int vAux1[] = {6, 7, 8, 3, 4, 5, 0, 1, 2};
+    int vAux2[] = {8, 7, 6, 5, 4, 3, 2, 1, 0};
+    string linha;
+    string s;
+    ifstream arq;
+
+    arq.open("cubo.txt");
+    if (!arq) {
+        cout << "Erro ao abrir arquivo\n";
+        return;
+    }
+    while (!arq.eof()) {
+        arq >> linha;
+        s += linha;
+    };
+    arq.close();
+
+    for (int i = 0; i < 27; i++) {
+        flagY = false;
+        flagW = false;
+        flagO = false;
+        flagR = false;
+        flagG = false;
+        flagB = false;
+
+        if (i >= 18) { // amarelo
+            k = i - 18;
+            cores[0] = s[k];
+            flagY = true;
+        }
+        if (i < 9) { // branco
+            k = i;
+            cores[1] = s[k + 9 * 5];
+            flagW = true;
+        }
+        if (i % 9 >= 6) { // laranja
+            k = i / 9 * 3 + i % 9 - 6;
+            k = vAux1[k];
+            cores[2] = s[k + 9];
+            flagO = true;
+        }
+        if (i % 9 < 3) { // vermelho
+            k = i / 9 * 3 + i % 9;
+            k = vAux2[k];
+            cores[3] = s[k + 9 * 3];
+            flagR = true;
+        }
+        if (i % 3 == 2) { // verde
+            k = i / 3;
+            k = vAux2[k];
+            cores[4] = s[k + 9 * 2];
+            flagG = true;
+        }
+        if (i % 3 == 0) { // azul
+            k = i / 3;
+            k = vAux1[k];
+            cores[5] = s[k + 9 * 4];
+            flagB = true;
+        }
+
+        k = mapa2[i];
+        for (int i1 = 0; i1 < 4; i1++) {
+            b = (!flagY || cores[0] == cubinhos[k].corZ()) &&
+                (!flagW || cores[1] == cubinhos[k].corZn()) &&
+                (!flagO || cores[2] == cubinhos[k].corX()) &&
+                (!flagR || cores[3] == cubinhos[k].corXn()) &&
+                (!flagG || cores[4] == cubinhos[k].corY()) &&
+                (!flagB || cores[5] == cubinhos[k].corYn());
+
+            if (b) {
+                break;
+            }
+            cubinhos[k].rotTheta += 90;
+
+            for (int i2 = 0; i2 < 4; i2++) {
+                b = (!flagY || cores[0] == cubinhos[k].corZ()) &&
+                    (!flagW || cores[1] == cubinhos[k].corZn()) &&
+                    (!flagO || cores[2] == cubinhos[k].corX()) &&
+                    (!flagR || cores[3] == cubinhos[k].corXn()) &&
+                    (!flagG || cores[4] == cubinhos[k].corY()) &&
+                    (!flagB || cores[5] == cubinhos[k].corYn());
+
+                if (b) {
+                    break;
+                }
+                cubinhos[k].rotPhi += 90;
+
+                for (int i3 = 0; i3 < 4; i3++) {
+                    b = (!flagY || cores[0] == cubinhos[k].corZ()) &&
+                        (!flagW || cores[1] == cubinhos[k].corZn()) &&
+                        (!flagO || cores[2] == cubinhos[k].corX()) &&
+                        (!flagR || cores[3] == cubinhos[k].corXn()) &&
+                        (!flagG || cores[4] == cubinhos[k].corY()) &&
+                        (!flagB || cores[5] == cubinhos[k].corYn());
+
+                    if (b) {
+                        break;
+                    }
+                    cubinhos[k].rotGamma += 90;
+                }
+            }
+        }
+    }
+}
 
 Cubo::Cubo(float _cx, float _cy, float _cz, float _largAresta) : id_(proxId_++) {
     int k;
@@ -239,21 +420,21 @@ void Cubo::tecla9() {
     int k;
     k = mapa2[13];
     cubinhos[k].rotPhi += DR;
-    // cout << cubinhos[k].rotPhi << endl;
+    cout << cubinhos[k].rotPhi << endl;
 }
 
 void Cubo::tecla0() {
     int k;
     k = mapa2[13];
     cubinhos[k].rotGamma += DR;
-    // cout << cubinhos[k].rotGamma << endl;
+    cout << cubinhos[k].rotGamma << endl;
 }
 
 void Cubo::tecla1() {
     int k;
     k = mapa2[13];
     cubinhos[k].rotTheta -= DR;
-    // cout << cubinhos[k].rotTheta << endl;
+    cout << cubinhos[k].rotTheta << endl;
 }
 
 void Cubo::tecla2() {
@@ -275,18 +456,23 @@ void Cubo::tecla4() {
 }
 
 void Cubo::tecla5() {
-
     int k;
-    for (int i = 0; i < 9; i++) {
-        // k = (i/3)*9+(i%3)+6; // lado laranja
-        // k = (i/3)*9+(i%3); // lado vermelho
-        k = i * 3 + 2; // lado verde
-        // k = i*3; // lado azul
-        // k = i; // lado branco
-        // k = i+18; // lado amarelo
-        k = mapa2[k];
+    // for (int i = 0; i < 9; i++) {
+    //     k = (i/3)*9+(i%3)+6; // lado laranja
+    //     k = (i/3)*9+(i%3); // lado vermelho
+    //     k = i * 3 + 2; // lado verde
+    //     k = i*3; // lado azul
+    //     k = i; // lado branco
+    //     k = i+18; // lado amarelo
+    //     k = mapa2[k];
+    //     mapa[k] = !mapa[k];
+    // }
+    for (int i = 0; i < 27; i++) {
+        k = mapa2[i];
         mapa[k] = !mapa[k];
     }
+    k = mapa2[13];
+    mapa[k] = true;
 
     return;
 }
@@ -766,7 +952,52 @@ void rodaEixoZ(float &rT, float &rP, float &rG, float dr) {
 }
 
 void Cubo::teclaPonto() {
-    rodaEixoY(cubinhos[13].rotTheta, cubinhos[13].rotPhi, cubinhos[13].rotGamma, DR);
+    int k;
+    for (int i = 0; i < 27; i++) {
+        // k = (i/3)*9+(i%3)+6; // lado laranja
+        // k = (i/3)*9+(i%3); // lado vermelho
+        // k = i * 3 + 2; // lado verde
+        // k = i*3; // lado azul
+        // k = i; // lado branco
+        //  k = i+18; // lado amarelo
+
+        if (i >= 18) { // amarelo
+            // cout << i -18 << endl;
+            // k=mapa2[i];
+            // mapa[k]=!mapa[k];
+        }
+        if (i < 9) { // branco
+            //    cout << i << endl;
+            //     k=mapa2[i];
+            //     mapa[k]=!mapa[k];
+        }
+        if (i % 3 == 0) { // azul
+            // cout << i / 3 << endl;
+            // k=mapa2[i];
+            // mapa[k]=!mapa[k];
+        }
+
+        if (i % 3 == 2) { // verde
+            cout << i / 3 << endl;
+            k = mapa2[i];
+            mapa[k] = !mapa[k];
+        }
+
+        if (i % 9 >= 6) { // laranja
+            // cout << i / 9 * 3 + i % 9 - 6 << endl;
+            // k=mapa2[i];
+            // mapa[k]=!mapa[k];
+        }
+
+        if (i % 9 < 3) { // vermelho
+            // cout << i/9*3+i%9 << endl;
+            // k=mapa2[i];
+            // mapa[k]=!mapa[k];
+        }
+        continue;
+    }
+
+    // rodaEixoY(cubinhos[13].rotTheta, cubinhos[13].rotPhi, cubinhos[13].rotGamma, DR);
 }
 
 void Cubo::tecla6() {

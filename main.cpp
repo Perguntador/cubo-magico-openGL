@@ -169,6 +169,17 @@ void teclado(unsigned char key, int x, int y) {
         stop = !stop;
         break;
 
+    case 's':
+    case 'S':
+        cubo2.salvar();
+        glutPostRedisplay();
+        break;
+    case 'l':
+    case 'L':
+        cubo2.carregar();
+        glutPostRedisplay();
+        break;
+
     case '+':
         s *= 1.1;
         config();

@@ -69,5 +69,8 @@ class Cubo {
 
     bool espera() { return flagRot; }
 
+    void salvar();
+    void carregar();
+
     void printId();
 };
