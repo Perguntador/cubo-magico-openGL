@@ -207,6 +207,11 @@ void executa() {
         int i = rand() % 12;
         teclado(movs[i], 0, 0);
     }
+    if (!stop) {
+        angTheta += 0.5;
+        config();
+        glutPostRedisplay();
+	}
 }
 
 void reshape(int x, int y) {
